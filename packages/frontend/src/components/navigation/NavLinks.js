@@ -1,38 +1,33 @@
 import React from 'react';
-import { Translate } from 'react-localize-redux';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { DONATE_TO_UKRAINE } from '../../../../../features';
-import { IS_MAINNET } from '../../config';
-import { isWhitelabel } from '../../config/whitelabel';
-import { Mixpanel } from '../../mixpanel/index';
-import DonateToUkraineIcon from '../svg/DonateToUkraineIcon';
-import ExploreIcon from '../svg/ExploreIcon';
-import HelpIcon from '../svg/HelpIcon';
-import UserIcon from '../svg/UserIcon';
-import VaultIcon from '../svg/VaultIcon';
+import { COLORS } from '../../utils/theme';
+import AccountIcon from '../svg/AccountIcon';
+import DaoIcon from '../svg/DaoIcon';
+import ReportsIcon from '../svg/ReportsIcon';
 import WalletIcon from '../svg/WalletIcon';
+
 
 const Container = styled.div`
     display: flex;
-    width: 100%;
     a {
         display: flex;
         align-items: center;
         cursor: pointer;
         transition: 100ms;
-        color: #72727A;
-        font-size: 15px;
+        color: ${COLORS.lightText};
+        font-size: 18px;
+        line-height: 24px;
         white-space: nowrap;
 
         :hover, &.selected {
             text-decoration: none;
-            color: #272729;
+            color: ${COLORS.green};
 
             svg {
-                path, circle, line {
-                    stroke: #0072CE;
+                path, circle, line, rect {
+                    stroke: ${COLORS.green};
                 }
 
                 &.user-icon {
@@ -94,10 +89,10 @@ const Container = styled.div`
 
     @media (min-width: 992px) {
         align-items: center;
-        margin-left: 10px;
+        margin-left: auto;
 
         a {
-            margin-left: 25px;
+            margin-right: 50px;
 
             &.account-details-link {
                 margin-left: 20px;
@@ -108,38 +103,22 @@ const Container = styled.div`
 
 const NavLinks = () => (
     <Container className='nav-links'>
-        <NavLink exact to='/' activeClassName='selected' onClick={() => Mixpanel.track('Click Wallet button on nav')}>
-            <WalletIcon/>
-            <Translate id='link.wallet'/>
+        <NavLink exact to='/' activeClassName='selected'>
+            <WalletIcon />
+            Wallet
         </NavLink>
-        <NavLink data-test-id="staking_navlink" to='/staking' activeClassName='selected' onClick={() => Mixpanel.track('Click Staking button on nav')}>
-            <VaultIcon/>
-            <Translate id='link.staking'/>
+        <NavLink data-test-id="staking_navlink" to='/dao' activeClassName='selected'>
+            <DaoIcon />
+            DAO
         </NavLink>
-        {isWhitelabel && (
-            <NavLink data-test-id="explore_navlink" to='/explore' activeClassName='selected' onClick={() => Mixpanel.track('Click Explore button on nav')}>
-                <ExploreIcon/>
-                <Translate id='link.explore'/>
-            </NavLink>
-        )}
-        <NavLink to='/profile' className='account-details-link' activeClassName='selected' onClick={() => Mixpanel.track('Click Account button on nav')}>
-            <UserIcon/>
-            <Translate id='link.account'/>
+        <NavLink to='/profile' className='account-details-link' activeClassName='selected'>
+            <AccountIcon />
+            Account
         </NavLink>
-        <a href={isWhitelabel ? 'https://support.mynearwallet.com/en' : 'https://nearhelp.zendesk.com/'} target='_blank' rel='noopener noreferrer' onClick={() => Mixpanel.track('Click Help button on nav')}>
-            <HelpIcon/>
-            <Translate id='link.help'/>
-        </a>
-        {DONATE_TO_UKRAINE && (
-            <NavLink
-                to={`/send-money/${IS_MAINNET ? 'ukraine' : 'ukraine.testnet'}`}
-                activeClassName="selected"
-                onClick={() => Mixpanel.track('Click Donate button on nav')}
-            >
-                <DonateToUkraineIcon />
-                <Translate id="link.donateToUkraine" />
-            </NavLink>
-        )}
+        <NavLink to='/reports' className='account-details-link' activeClassName='selected'>
+            <ReportsIcon />
+            Reports
+        </NavLink>
     </Container>
 );
 
