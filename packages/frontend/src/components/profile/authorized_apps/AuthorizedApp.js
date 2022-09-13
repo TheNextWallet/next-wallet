@@ -2,22 +2,40 @@ import React from 'react';
 import { Translate } from 'react-localize-redux';
 import styled from 'styled-components';
 
+import { COLORS, BACKGROUND } from '../../../utils/theme';
 import Balance from '../../common/balance/Balance';
 import FormButton from '../../common/FormButton';
 
 const Container = styled.div`
     &&& {
-        border: 2px solid #F0F0F0;
-        border-radius: 8px;
-        padding: 20px;
+        background: ${COLORS.darkGray};
+        border-radius: 30px;
+        padding: 30px;
+        font-family: 'Poppins', sans-serif;
+        position: relative;
+        background-image: ${BACKGROUND.bubbles};
+        background-size: 140%;
+    
+        .img-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 
         .title {
-            color: #3F4045;
-            font-weight: 600;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            z-index: 1;
+            position: relative;
+
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 103.4%;
+            color: ${COLORS.white};
 
             > button {
                 margin: 0;
@@ -25,33 +43,63 @@ const Container = styled.div`
         }
 
         .key {
-            color: #3F4045;
-            background-color: #FAFAFA;
-            border: 1px solid #F0F0F1;
-            border-radius: 4px;
-            padding: 8px;
-            font-size: 12px;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 103.4%;
+            color: ${COLORS.lightText};
+            background: ${COLORS.darkGray};
+            border-radius: 15px;
+            padding: 15px 20px;
             word-break: break-all;
-        }
-
-        hr {
-            border-style: dashed !important;
-            border-color: #F0F0F0;
-            margin: 15px 0 !important;
+            z-index: 1;
+            position: relative;
         }
 
         .fee {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-top: 30px;
+            z-index: 1;
+            position: relative;
             span {
                 :first-of-type {
-                    color: #72727A;
+                    font-weight: 500;
+                    font-size: 20px;
+                    line-height: 103.4%;
+                    color: ${COLORS.white};
                 }
                 :last-of-type {
-                    color: #272729;
                     font-weight: 600;
+                    font-size: 20px;
+                    line-height: 103.4%;
+                    color: ${COLORS.beige};
                     text-align: right;
+                }
+            }
+        }
+        @media (max-width: 767px) {
+            background-image: none;
+            .title {
+                font-weight: 500;
+                font-size: 18px;
+            }
+
+            .key {
+                background: #293933;
+                border-radius: 30px;
+            }
+
+            .fee {
+                span {
+                    :first-of-type {
+                        font-weight: 500;
+                        font-size: 18px;
+                    }
+                    :last-of-type {
+                        font-weight: 500;
+                        font-size: 18px;
+                    }
                 }
             }
         }
@@ -75,7 +123,6 @@ const AuthorizedApp = ({ app, onClick, deAuthorizing }) => {
                 )}
             </div>
             <div className='key font-monospace'>{app.public_key}</div>
-            <hr/>
             <div className='fee'>
                 <span><Translate id='authorizedApps.feeAllowance' /></span>
                 <span><Balance amount={app.access_key.permission.FunctionCall.allowance} showBalanceInUSD={false}/></span>

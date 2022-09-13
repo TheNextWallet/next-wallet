@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
+import { BACKGROUND, COLORS } from '../../../utils/theme';
+
 const Container = styled.div`
     width: auto;
-    margin: 30px auto 0 auto;
+    margin: 30px auto 30px auto;
     max-width: 100%;
     padding: 0 14px;
 
@@ -16,7 +18,32 @@ const Container = styled.div`
     }
 
     @media (min-width: 1200px) {
-        width: 1000px;
+        width: 1280px;
+    }
+
+    &.container {
+        margin-bottom: 40px;
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        text-align: center;
+
+        color: ${COLORS.white};
+        h2 {
+            span {
+                color: ${COLORS.lightText};
+                b {
+                    color: ${COLORS.green};
+                }
+            }
+        }
+
+        .notranslate {
+            background-image: ${BACKGROUND.bubbles};
+            background-size: 110%;
+            border-radius: 20px
+        }
     }
 
     &.small-centered, &.xs-centered {
@@ -24,7 +51,7 @@ const Container = styled.div`
 
         @media (min-width: 768px) {
             &.border {
-                border: 1px solid #F0F0F1;
+                border: 1px solid ${COLORS.darkGray};
                 border-radius: 16px;
                 padding: 40px;
                 margin-top: 40px;
@@ -32,7 +59,7 @@ const Container = styled.div`
         }
 
         &.center {
-            display: flex;
+            display flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
@@ -66,7 +93,7 @@ const Container = styled.div`
     
             .right {
                 flex: 1;
-                max-width: 365px;
+                max-width: 100%;
             }
         }
     }

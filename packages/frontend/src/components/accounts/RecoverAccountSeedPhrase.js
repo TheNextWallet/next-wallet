@@ -21,12 +21,20 @@ import { importZeroBalanceAccountPhrase } from '../../redux/slices/importZeroBal
 import { selectActionsPending, selectStatusLocalAlert, selectStatusMainLoader } from '../../redux/slices/status';
 import isValidSeedPhrase from '../../utils/isValidSeedPhrase';
 import parseFundingOptions from '../../utils/parseFundingOptions';
+import { COLORS } from '../../utils/theme';
 import Container from '../common/styled/Container.css';
 import RecoverAccountSeedPhraseForm from './RecoverAccountSeedPhraseForm';
 
 const { setZeroBalanceAccountImportMethod } = importZeroBalanceAccountActions;
 
 const StyledContainer = styled(Container)`
+    color: ${COLORS.white};
+
+    h1, h2, h4 {
+        text-align: center;
+        color: ${COLORS.white};
+    }
+
     .input {
         width: 100%;
     }
@@ -121,7 +129,11 @@ class RecoverAccountSeedPhrase extends Component {
             }
         );
 
-        const fundWithExistingAccount = parseQuery(location.search, { parseBooleans: true }).fundWithExistingAccount;
+        const fundWithExistingAccount = parseQuery(
+            location.search,
+            { parseBooleans: true }
+        ).fundWithExistingAccount;
+
         if (fundWithExistingAccount) {
             const createNewAccountParams = stringify(JSON.parse(fundWithExistingAccount));
             redirectTo(`/fund-with-existing-account?${createNewAccountParams}`);
@@ -146,7 +158,7 @@ class RecoverAccountSeedPhrase extends Component {
         };
 
         return (
-            <StyledContainer className='small-centered border'>
+            <StyledContainer className='small-centered'>
                 <h1><Translate id='recoverSeedPhrase.pageTitle' /></h1>
                 <h2><Translate id='recoverSeedPhrase.pageText' /></h2>
                 <form onSubmit={(e) => {
@@ -181,7 +193,10 @@ const mapStateToProps = (state, { match }) => ({
     seedPhrase: match.params.seedPhrase || '',
     localAlert: selectStatusLocalAlert(state),
     mainLoader: selectStatusMainLoader(state),
-    findMyAccountSending: selectActionsPending(state, { types: ['RECOVER_ACCOUNT_SEED_PHRASE', 'REFRESH_ACCOUNT_OWNER'] })
+    findMyAccountSending: selectActionsPending(
+        state,
+        { types: ['RECOVER_ACCOUNT_SEED_PHRASE', 'REFRESH_ACCOUNT_OWNER'] }
+    )
 });
 
 export const RecoverAccountSeedPhraseWithRouter = connect(

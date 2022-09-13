@@ -155,6 +155,21 @@ const CustomButton = styled.button`
                 color: #fff;
             }
         }
+        &.dark-red {
+            background: ${COLORS.darkRed};
+            color: ${COLORS.lightRed}
+
+            // :active,
+            // :hover,
+            // :focus {
+            //     border-color: #E5484D;
+            //     background: #fff;
+            //     color: #E5484D;
+            // }
+            // &.dots {
+            //     color: #fff;
+            // }
+        }
         &.blue {
             border-color: #0072ce;
             background: #0072ce;

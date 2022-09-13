@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLORS } from '../../../utils/theme';
 
 const Style = styled.div`
     position: fixed;
@@ -62,7 +63,7 @@ const Style = styled.div`
     .modal {
         z-index: 1050;
         width: 100%;
-        background-color: white;
+        background-color: ${COLORS.darkGray};
         border-radius: 6px;
         transition: 0.3s;
         padding: 25px;

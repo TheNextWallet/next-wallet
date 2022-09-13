@@ -3,6 +3,7 @@ import { Translate } from 'react-localize-redux';
 import styled from 'styled-components';
 
 import { Mixpanel } from '../../../mixpanel/index';
+import { COLORS } from '../../../utils/theme';
 import Button from '../../common/Button';
 import FormButton from '../../common/FormButton';
 
@@ -12,9 +13,12 @@ const EnabledContainer = styled.div`
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-family: 'Poppins', sans-serif;
             .title {
                 font-weight: 500;
-                color: #24272a;
+                font-size: 20px;
+                line-height: 103.4%;
+                color: ${COLORS.white};
             }
             .info {
                 text-overflow: ellipsis;
@@ -30,20 +34,32 @@ const EnabledContainer = styled.div`
                 }
             }
             button {
-                color: #FF585D;
-                background-color: #f8f8f8;
-                border: none;
                 font-weight: 600;
-                &:hover {
-                    color: white;
-                    background-color: #FF585D;
-                }
+                font-size: 20px;
+                line-height: 103.4%;
+                color: ${COLORS.lightRed};
+                font-family: 'Poppins', sans-serif;
+                background: ${COLORS.darkGreen};
+                border-radius: 15px;
+                border: unset;
+                padding: 10px 50px;
+                width: 176px;
+                height: 40px;
+            }
+            button:disabled {
+                color: ${COLORS.lightRed} !important;
+                opacity: 1 !important;
             }
         }
         .bottom {
             display: flex;
             margin-top: 20px;
-            color: #A1A1A9;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 103.4%;
+            color: ${COLORS.lightText};
+            font-family: 'Poppins', sans-serif;
+
             button {
                 text-decoration: none;
                 margin-left: 10px;
@@ -55,6 +71,15 @@ const EnabledContainer = styled.div`
                     display: inline-block;
                     background-color: #e6e6e6;
                     margin-right: 10px;
+                }
+            }
+        }
+        @media (max-width: 767px) {
+            .top {
+                button {
+                    padding: 16px 32px;
+                    width: unset;
+                    height: unset;
                 }
             }
         }
@@ -135,6 +160,7 @@ class ActiveMethod extends Component {
                             <div className='info'>{data.detail}</div>
                         </div>
                         <Button
+                            disabled={true}
                             onClick={() => {
                                 Mixpanel.track(data.kind === 'phrase' ? 'SR-SP Click disable button': `SR Click disable button for ${data.kind}`);
                                 this.handleToggleDisable();
