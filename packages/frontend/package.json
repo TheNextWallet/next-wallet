@@ -66,7 +66,7 @@
   "scripts": {
     "predeploy": "yarn build",
     "update:static": "cp src/wasm/multisig.wasm dist/multisig.wasm && cp src/wasm/main.wasm dist/main.wasm && cp src/wasm/state_cleanup.wasm dist/state_cleanup.wasm",
-    "start": "yarn update:static; parcel src/index.html --https --cert devServerCertificates/primary.crt --key devServerCertificates/private.pem",
+    "start": "yarn update:static; parcel -p 8080 src/index.html --https --cert devServerCertificates/primary.crt --key devServerCertificates/private.pem",
     "prebuild": "rm -rf dist/",
     "build": "yarn run bundle",
     "bundle": "NODE_ENV=production node ci/runBundler.js",

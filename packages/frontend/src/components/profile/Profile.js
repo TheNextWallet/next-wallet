@@ -1,19 +1,16 @@
-import BN from 'bn.js';
 import { formatNearAmount } from 'near-api-js/lib/utils/format';
 import React, {useEffect, useState} from 'react';
 import { Translate } from 'react-localize-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { IS_MAINNET, MIN_BALANCE_FOR_GAS } from '../../config';
+import { MIN_BALANCE_FOR_GAS } from '../../config';
 import { useAccount } from '../../hooks/allAccounts';
 import { Mixpanel } from '../../mixpanel/index';
 import {
     getLedgerKey,
     checkCanEnableTwoFactor,
     redirectTo,
-    refreshAccount,
-    transferAllFromLockup,
     getProfileStakingDetails,
     getBalance
 } from '../../redux/actions/account';
@@ -25,29 +22,21 @@ import {
     selectAccountId,
     selectAccountLedgerKey,
     selectAccountExists,
-    selectAccountSlice,
-    selectAccountFullAccessKeys
 } from '../../redux/slices/account';
 import { selectAllAccountsHasLockup } from '../../redux/slices/allAccounts';
 import { actions as recoveryMethodsActions, selectRecoveryMethodsByAccountId } from '../../redux/slices/recoveryMethods';
-import { selectNearTokenFiatValueUSD } from '../../redux/slices/tokenFiatValues';
-import isMobile from '../../utils/isMobile';
+import { COLORS } from '../../utils/theme';
 import { wallet } from '../../utils/wallet';
-import AlertBanner from '../common/AlertBanner';
-import FormButton from '../common/FormButton';
 import SkeletonLoading from '../common/SkeletonLoading';
 import Container from '../common/styled/Container.css';
 import Tooltip from '../common/Tooltip';
-import CheckCircleIcon from '../svg/CheckCircleIcon';
+import AccountIcon from '../svg/AccountIcon';
+import CheckIcon from '../svg/CheckIcon';
 import LockIcon from '../svg/LockIcon';
 import ShieldIcon from '../svg/ShieldIcon';
-import UserIcon from '../svg/UserIcon';
 import AuthorizedApp from './authorized_apps/AuthorizedApp';
 import BalanceContainer from './balances/BalanceContainer';
-import LockupAvailTransfer from './balances/LockupAvailTransfer';
 import ExportKeyWrapper from './export_private_key/ExportKeyWrapper';
-import HardwareDevices from './hardware_devices/HardwareDevices';
-import MobileSharingWrapper from './mobile_sharing/MobileSharingWrapper';
 import RecoveryContainer from './Recovery/RecoveryContainer';
 import RemoveAccountWrapper from './remove_account/RemoveAccountWrapper';
 import TwoFactorAuth from './two_factor/TwoFactorAuth';
@@ -56,27 +45,23 @@ import { ZeroBalanceAccountWrapper } from './zero_balance/ZeroBalanceAccountWrap
 const { fetchRecoveryMethods } = recoveryMethodsActions;
 
 const StyledContainer = styled(Container)`
-    @media (max-width: 991px) {
-        .right {
-            margin-top: 50px;
-        }
-    }
+    padding: 0 16px;
     h2 {
-        font-weight: 900 !important;
-        font-size: 22px !important;
-        margin: 10px 0;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700 !important;
+        font-size: 24px !important;
+        line-height: 103.4% !important;
+        color: ${COLORS.white} !important;
+        margin: 0px 0px 30px;
         text-align: left !important;
-        line-height: 140% !important;
         display: flex;
         align-items: center;
-        color: #24272a !important;
         svg {
+            width: 44px;
+            height: 44px;
             margin-right: 15px;
-            &.user-icon {
-                margin-right: 10px;
-            }
-            .background {
-                display: none;
+            & > path {
+                stroke: ${COLORS.white};
             }
         }
     }
@@ -87,11 +72,7 @@ const StyledContainer = styled(Container)`
         }
     }
     .left {
-        @media (min-width: 992px) {
-            > hr {
-                margin: 50px 0px 30px 0px;
-            }
-        }
+        margin-right: 50px !important;
         .animation-wrapper {
             margin-top: 50px;
             :last-of-type {
@@ -103,10 +84,16 @@ const StyledContainer = styled(Container)`
         }
     }
     .right {
+        max-width: 515px !important;
         > h4 {
-            margin: 50px 0 20px 0;
+            margin: 0px 0 25px 0;
             display: flex;
             align-items: center;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 103.4%;
+            color: ${COLORS.lightText};
+            font-family: 'Poppins', sans-serif;
         }
         .recovery-option,
         .animation-wrapper {
@@ -124,8 +111,12 @@ const StyledContainer = styled(Container)`
         margin: 50px 0 40px 0;
     }
     .sub-heading {
-        margin: 20px 0;
-        color: #72727A;
+        margin: 30px 0;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 140%;
+        color: ${COLORS.lightText};
+        font-family: 'Poppins', sans-serif;
     }
     .auth-apps {
         display: flex;
@@ -142,16 +133,40 @@ const StyledContainer = styled(Container)`
     .authorized-app-box {
         margin-top: 20px !important;
     }
+
+    @media (max-width: 991px) {
+        .sub-heading {
+            text-align: center;
+        }
+        h2 {
+            font-weight: 600 !important;
+            font-size: 22px !important;
+            svg {
+                width: 32px;
+                height: 32px;
+            }
+        }
+        .right {
+            margin-top: 50px;
+            max-width: 100% !important;
+        }
+        .left {
+            margin-right: 0px !important;
+        }
+        hr {
+            border: none;
+            margin: 32px 0;
+        }
+    }
+
 `;
 
 export function Profile({ match }) {
-    const [transferring, setTransferring] = useState(false);
     const accountExists = useSelector(selectAccountExists);
     const has2fa = useSelector(selectAccountHas2fa);
     const authorizedApps = useSelector(selectAccountAuthorizedApps);
     const ledgerKey = useSelector(selectAccountLedgerKey);
     const loginAccountId = useSelector(selectAccountId);
-    const nearTokenFiatValueUSD = useSelector(selectNearTokenFiatValueUSD);
     const accountIdFromUrl = match.params.accountId;
     const accountId = accountIdFromUrl || loginAccountId;
     const isOwner = accountId && accountId === loginAccountId && accountExists;
@@ -166,13 +181,7 @@ export function Profile({ match }) {
     const userRecoveryMethods = useSelector((state) => selectRecoveryMethodsByAccountId(state, { accountId: account.accountId }));
     const twoFactor = has2fa && userRecoveryMethods && userRecoveryMethods.filter((m) => m.kind.includes('2fa'))[0];
 
-    const accountState = useSelector(selectAccountSlice);
-    const keys = useSelector(selectAccountFullAccessKeys);
-    const publicKeys = keys.map((key) => key.public_key);
     const hasLedger = userRecoveryMethods.some((method) => method.kind === 'ledger');
-
-    const ledgerIsConnected = useSelector(selectAccountLedgerKey);
-    const hasLedgerButNotConnected = hasLedger && !ledgerIsConnected;
 
     useEffect(() => {
         if (!loginAccountId) {
@@ -228,42 +237,17 @@ export function Profile({ match }) {
         }
     }, [twoFactor]);
 
-    const handleTransferFromLockup = async () => {
-        try {
-            setTransferring(true);
-            await dispatch(transferAllFromLockup());
-            await dispatch(refreshAccount());
-            await dispatch(getProfileStakingDetails());
-        } finally {
-            setTransferring(false);
-        }
-    };
-
-    const MINIMUM_AVAILABLE_TO_TRANSFER = new BN('10000000000000000000000');
-
     const shouldShowEmail = userRecoveryMethods.some(({ kind }) => kind === 'email');
     const shouldShowPhone = userRecoveryMethods.some(({ kind }) => kind === 'phone');
 
     return (
         <StyledContainer>
-            {isOwner && hasLockup && new BN(profileBalance.lockupBalance.unlocked.availableToTransfer).gte(MINIMUM_AVAILABLE_TO_TRANSFER) && (
-                <LockupAvailTransfer
-                    available={profileBalance.lockupBalance.unlocked.availableToTransfer || '0'}
-                    onTransfer={handleTransferFromLockup}
-                    sending={transferring}
-                    tokenFiatValue={nearTokenFiatValueUSD}
-                />
-            )}
             <div className='split'>
                 <div className='left'>
-                    {accountExists === false && (
-                        <AlertBanner
-                            title='profile.accountDoesNotExistBanner.desc'
-                            data={accountId}
-                            theme='light-blue'
-                        />
-                    )}
-                    <h2><UserIcon/><Translate id='profile.pageTitle.default'/></h2>
+                    <h2>
+                        <AccountIcon />
+                        <Translate id='profile.pageTitle.default' />
+                    </h2>
                     {profileBalance ? (
                         <BalanceContainer
                             account={account}
@@ -287,11 +271,7 @@ export function Profile({ match }) {
                     )}
                     {isOwner && authorizedApps?.length ? (
                         <>
-                            <hr/>
-                            <div className='auth-apps'>
-                                <h2><CheckCircleIcon/><Translate id='profile.authorizedApps.title'/></h2>
-                                <FormButton color='link' linkTo='/authorized-apps'><Translate id='button.viewAll'/></FormButton>
-                            </div>
+                            <h2><CheckIcon /><Translate id='profile.authorizedApps.title'/></h2>
                             {authorizedApps.slice(0, 2).map((app, i) => (
                                 <AuthorizedApp key={i} app={app}/>
                             ))}
@@ -302,27 +282,16 @@ export function Profile({ match }) {
                     <div className='right'>
                         <h2><ShieldIcon/><Translate id='profile.security.title'/></h2>
                         <h4><Translate id='profile.security.mostSecure'/><Tooltip translate='profile.security.mostSecureDesc' icon='icon-lg'/></h4>
-                        {!twoFactor && (
-                            <HardwareDevices 
-                                recoveryMethods={userRecoveryMethods} 
-                                account={accountState}
-                                publicKeys={publicKeys}
-                                hasLedger={hasLedger}
-                                ledgerIsConnected={ledgerIsConnected}
-                                hasLedgerButNotConnected={hasLedgerButNotConnected}
-                            />
-                        )}
                         <RecoveryContainer type='phrase' recoveryMethods={userRecoveryMethods}/>
-                        { (shouldShowEmail || shouldShowPhone) && <h4><Translate id='profile.security.lessSecure'/><Tooltip translate='profile.security.lessSecureDesc' icon='icon-lg'/></h4>}
-                        { shouldShowEmail && <RecoveryContainer type='email' recoveryMethods={userRecoveryMethods}/> }
-                        { shouldShowPhone && <RecoveryContainer type='phone' recoveryMethods={userRecoveryMethods}/> }
                         {(twoFactor || !hasLedger) && (
                             <>
-                                <hr/>
+                                <hr style={{background: '#2C2C2C'}} />
                                 <h2><LockIcon/><Translate id='profile.twoFactor'/></h2>
                                 {account.canEnableTwoFactor !== null ? (
                                     <>
-                                        <div className='sub-heading'><Translate id='profile.twoFactorDesc'/></div>
+                                        <div className='sub-heading'>
+                                            Authenticate with Google 2-Step Verification when approving transactions and/or signing in to your account.
+                                        </div>
                                         <TwoFactorAuth
                                             twoFactor={twoFactor}
                                         />
@@ -336,13 +305,10 @@ export function Profile({ match }) {
                             </>
                         )}
                         <>
-                            <hr />
+                            <hr style={{background: '#2C2C2C'}} />
                             {secretKey ? <ExportKeyWrapper secretKey={secretKey}/> : null}
                             <RemoveAccountWrapper/>
                         </>
-                        {!IS_MAINNET && !account.ledgerKey && !isMobile() &&
-                            <MobileSharingWrapper/>
-                        }
                     </div>
                 )}
                 {accountExists === false && !accountIdFromUrl && (

@@ -10,18 +10,18 @@ import selectRecoveryLoader from '../../../redux/selectors/crossStateSelectors/s
 import { selectAccountSlice } from '../../../redux/slices/account';
 import { actions as recoveryMethodsActions } from '../../../redux/slices/recoveryMethods';
 import { selectStatusMainLoader } from '../../../redux/slices/status';
+import { COLORS } from '../../../utils/theme';
 import SkeletonLoading from '../../common/SkeletonLoading';
 import RecoveryMethod from './RecoveryMethod';
 
 const { fetchRecoveryMethods } = recoveryMethodsActions;
 
 const Container = styled.div`
-
-    border: 2px solid #e6e6e6;
-    border-radius: 8px;
+    background: ${COLORS.darkGray};
+    border-radius: 30px;
 
     > div {
-        padding: 15px 20px;
+        padding: 35px 28px;
         border-bottom: 2px solid #f8f8f8;
 
         &:last-of-type {
@@ -33,6 +33,12 @@ const Container = styled.div`
         font-size: 15px;
         width: 100px;
         height: 36px;
+    }
+    
+    @media (max-width: 767px) {
+        > div {
+            padding: 32px 24px;
+        }
     }
 `;
 
