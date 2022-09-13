@@ -1,9 +1,8 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Wallet } from '../components/wallet/Wallet';
+import Wallet from '../components/wallet/Wallet';
 import { useFungibleTokensIncludingNEAR } from '../hooks/fungibleTokensIncludingNEAR';
-import { Mixpanel } from '../mixpanel/index';
 import { selectAccountId, selectBalance, selectAccountExists } from '../redux/slices/account';
 import { selectAvailableAccounts } from '../redux/slices/availableAccounts';
 import { selectCreateFromImplicitSuccess, selectCreateCustomName, actions as createFromImplicitActions } from '../redux/slices/createFromImplicit';
@@ -20,11 +19,7 @@ const { setCreateFromImplicitSuccess, setCreateCustomName } = createFromImplicit
 const { setZeroBalanceAccountImportMethod } = importZeroBalanceAccountActions;
 const { fetchRecoveryMethods } = recoveryMethodsActions;
 
-
-export function WalletWrapper({
-    tab,
-    setTab
-}) {
+const WalletWrapper = ({ tab, setTab }) => {
     const accountId = useSelector(selectAccountId);
     const accountExists = useSelector(selectAccountExists);
     const balance = useSelector(selectBalance);
@@ -41,9 +36,6 @@ export function WalletWrapper({
 
     useEffect(() => {
         if (accountId) {
-            Mixpanel.identify(Mixpanel.get_distinct_id());
-            Mixpanel.people.set({ relogin_date: new Date().toString() });
-
             dispatch(fetchNFTs({ accountId }));
             dispatch(fetchTokens({ accountId }));
 
@@ -68,16 +60,13 @@ export function WalletWrapper({
             tokensLoading={tokensLoading}
             availableAccounts={availableAccounts}
             sortedNFTs={sortedNFTs}
-            handleCloseLinkdropModal={
-                useCallback(() => {
-                    dispatch(setLinkdropAmount('0'));
-                    Mixpanel.track('Click dismiss NEAR drop success modal');
-                }, [])
-            }
+            handleCloseLinkdropModal={dispatch(setLinkdropAmount('0'))}
             handleSetCreateFromImplicitSuccess={() => dispatch(setCreateFromImplicitSuccess(false))}
             handleSetCreateCustomName={() => dispatch(setCreateCustomName(false))}
             handleSetZeroBalanceAccountImportMethod={() => dispatch(setZeroBalanceAccountImportMethod(''))}
             userRecoveryMethods={userRecoveryMethods}
         />
     );
-}
+};
+
+export default WalletWrapper;
