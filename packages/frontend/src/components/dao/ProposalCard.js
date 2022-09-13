@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { COLORS, MEDIA_QUERY } from '../../utils/theme';
+import { formatNearAmount } from '../common/balance/helpers';
 import OutIcon from '../svg/OutIcon';
 
 const Styles = {
@@ -85,10 +86,16 @@ const Styles = {
         },
     }),
     DescriptionWrapper: styled.div({
-        gridColumnStart: 3,
-        gridColumnEnd: 4,
-        gridRowStart: 1,
-        gridRowEnd: 2,
+        // gridColumnStart: 3,
+        // gridColumnEnd: 4,
+        // gridRowStart: 1,
+        // gridRowEnd: 2,
+
+        gridColumnStart: 1,
+        gridColumnEnd: 2,
+        gridRowStart: 3,
+        gridRowEnd: 4,
+
         [MEDIA_QUERY.mobile]: {
             gridColumnStart: 2,
             gridColumnEnd: 4,
@@ -121,10 +128,19 @@ const Styles = {
         },
     }),
     AmountWrapper: styled.div({
-        gridColumnStart: 1,
-        gridColumnEnd: 2,
-        gridRowStart: 3,
-        gridRowEnd: 4,
+
+
+        // gridColumnStart: 1,
+        // gridColumnEnd: 2,
+        // gridRowStart: 3,
+        // gridRowEnd: 4,
+
+        gridColumnStart: 3,
+        gridColumnEnd: 4,
+        gridRowStart: 1,
+        gridRowEnd: 2,
+
+
         [MEDIA_QUERY.mobile]: {
             gridColumnStart: 3,
             gridColumnEnd: 4,
@@ -215,7 +231,7 @@ const ProposalCard = ({ type, proposer, description, votePeriodEnd, kind }) =>  
         <Styles.Line />
         <Styles.AmountWrapper>
             <Styles.Title textAlign="start">Amount</Styles.Title>
-            <Styles.Value>{kind?.amount}</Styles.Value>
+            <Styles.Value>{formatNearAmount(kind?.amount)} NEAR</Styles.Value>
         </Styles.AmountWrapper>
         <Styles.TargetWrapper>
             <Styles.Title>Target</Styles.Title>

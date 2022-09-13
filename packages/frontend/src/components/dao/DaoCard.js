@@ -21,10 +21,17 @@ const Styles = {
     Dao: styled.div({
         display: 'grid',
         gridTemplateColumns: '2fr 1fr 1fr 1fr',
+        background: COLORS.darkGray,
+        border: "1px",
+        borderRadius: "30px",
+
         [MEDIA_QUERY.tablet]: {
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
             gridGap: '30px',
+            background: COLORS.darkGray,
+            border: "1px",
+            borderRadius: "30px",
         }
     }),
     Icon: styled.div({
@@ -147,16 +154,19 @@ const Styles = {
         fontSize: '18px',
         color: COLORS.beige,
         textAlign: 'end',
+        margin: "10px 20px 10px 0px",
         '& > div': {
             color: COLORS.lightText,
             marginBottom: '10px',
             fontSize: '18px',
         },
+
         [MEDIA_QUERY.tablet]: {
             gridColumnStart: 2,
             gridColumnEnd: 3,
             gridRowStart: 2,
             gridRowEnd: 3,
+            margin: "0px 20px 10px 0px",
         },
         [MEDIA_QUERY.mobile]: {
             gridColumnStart: 1,
@@ -169,35 +179,46 @@ const Styles = {
                 fontSize: '20px',
                 fontWeight: '600',
             },
+            margin: "0px 20px 10px 0px",
         },
     }),
     Flex: styled.div({
         display: 'flex',
+        margin: "10px 0 10px 10px",
+        
         [MEDIA_QUERY.tablet]: {
             gridColumnStart: 1,
             gridColumnEnd: 2,
             gridRowStart: 1,
             gridRowEnd: 2,
+            margin: "10px 0 0 10px",
         },
+        
         [MEDIA_QUERY.mobile]: {
             gridColumnStart: 1,
             gridColumnEnd: 3,
             gridRowStart: 1,
             gridRowEnd: 2,
+            margin: "10px 0 0 10px",
         },
+        
     }),
     FundWrapper: styled.div({
+        margin: "10px 0 10px 10px",
+
         [MEDIA_QUERY.tablet]: {
             gridColumnStart: 2,
             gridColumnEnd: 3,
             gridRowStart: 1,
             gridRowEnd: 2,
+            margin: "10px 20px 0px 0px",
         },
         [MEDIA_QUERY.mobile]: {
             gridColumnStart: 1,
             gridColumnEnd: 2,
             gridRowStart: 2,
             gridRowEnd: 3,
+            margin: "10px 0 10px 10px",
         },
     }),
 };
