@@ -2,20 +2,16 @@ import React from 'react';
 import { Translate } from 'react-localize-redux';
 import styled from 'styled-components';
 
-import { IS_MAINNET } from '../../config';
-import HardwareDeviceIcon from '../../images/icon-hardware-device.svg';
-import EmailIcon from '../../images/icon-recover-email.svg';
-import PhoneIcon from '../../images/icon-recover-phone.svg';
 import PhraseIcon from '../../images/icon-recover-seedphrase.svg';
 import { Mixpanel } from '../../mixpanel/index';
+import { COLORS } from '../../utils/theme';
 import FormButton from '../common/FormButton';
 import Container from '../common/styled/Container.css';
-import VerifyWalletDomainBanner from '../common/VerifyWalletDomainBanner';
-import SmartPhoneIcon from '../svg/SmartPhoneIcon';
-
 
 const StyledContainer = styled(Container)`
+
     h1, h2 {
+        color: ${COLORS.white};
         text-align: center;
     }
     h2 {
@@ -30,22 +26,17 @@ const StyledContainer = styled(Container)`
             margin-top: 20px;
         }
     }
-`;
-
-const Options = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-top: 40px;
-    padding-bottom: 40px;
-    @media (min-width: 992px) {
-        flex-direction: row;
-        flex-wrap: wrap;
+    .options-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 `;
 
 const Option = styled.div`
     flex: 1;
-    border: 3px solid #f5f5f5;
+    border: 3px solid ${COLORS.darkGray};
+    background-color: ${COLORS.darkGray};
     border-radius: 6px;
     padding: 25px;
     margin-bottom: 25px;
@@ -67,7 +58,7 @@ const Option = styled.div`
 const Header = styled.div`
     display: flex;
     align-items: center;
-    color: #24272a;
+    color: ${COLORS.white};
     font-weight: 500;
     font-size: 16px;
     :not(.no-background) {
@@ -95,7 +86,7 @@ const Header = styled.div`
 `;
 
 const P = styled.p`
-    color: #4a4f54;
+    color: ${COLORS.lightText};
     &:first-of-type {
         margin-top: 20px;
     }
@@ -104,64 +95,25 @@ const P = styled.p`
     }
 `;
 
-const RecoverAccount = ({
-    locationSearch,
-    isMobile
-}) => {
-    return (
-        <>  
-            <VerifyWalletDomainBanner />
-            <StyledContainer>
-                <h1><Translate id='recoverAccount.pageTitle' /></h1>
-                <h2><Translate id='recoverAccount.pageText' /></h2>
-                <Options>
-                    <Option>
-                        <Header icon={EmailIcon}><Translate id='recoverAccount.email.title' /></Header>
-                        <P><Translate id='recoverAccount.email.desc' /> <span><Translate id='recoverAccount.email.subject' /></span></P>
-                        <P><Translate id='recoverAccount.actionRequired' /></P>
-                        <P><Translate id='recoverAccount.cannotResend' /></P>
-                    </Option>
-                    <Option>
-                        <Header icon={PhoneIcon}><Translate id='recoverAccount.phone.title' /></Header>
-                        <P><Translate id='recoverAccount.phone.desc' /> <span><Translate id='recoverAccount.phone.number' /></span></P>
-                        <P><Translate id='recoverAccount.actionRequired' /></P>
-                        <P><Translate id='recoverAccount.cannotResend' /></P>
-                    </Option>
-                    <Option>
-                        <Header icon={PhraseIcon}><Translate id='recoverAccount.phrase.title' /></Header>
-                        <P><Translate id='recoverAccount.phrase.desc' /></P>
-                        <FormButton
-                            color='seafoam-blue'
-                            linkTo={`/recover-seed-phrase${locationSearch}`}
-                            onClick={() => Mixpanel.track('IE Click seed phrase recovery button')}
-                            data-test-id="recoverAccountWithPassphraseButton"
-                            id='IE Click seed phrase recovery button'
-                        >
-                            <Translate id='button.recoverAccount' />
-                        </FormButton>
-                    </Option>
-                    <Option>
-                        <Header icon={HardwareDeviceIcon}><Translate id='recoverAccount.ledger.title' /></Header>
-                        <P><Translate id='recoverAccount.ledger.desc' /></P>
-                        <FormButton
-                            color='seafoam-blue'
-                            linkTo={`/sign-in-ledger${locationSearch}`}
-                            onClick={() => Mixpanel.track('IE Click ledger recovery button')}
-                            id='IE Click ledger recovery button'
-                        >
-                            <Translate id='button.signInLedger' />
-                        </FormButton>
-                    </Option>
-                    {!IS_MAINNET && isMobile && (
-                        <Option>
-                            <Header className='no-background'><SmartPhoneIcon /><Translate id='mobileDeviceAccess.title' /></Header>
-                            <P><Translate id='mobileDeviceAccess.importCode.desc' /></P>
-                        </Option>
-                    )}
-                </Options>
-            </StyledContainer>
-        </>
-    );
-};
+const RecoverAccount = ({ locationSearch }) => (
+    <StyledContainer>
+        <h1><Translate id='recoverAccount.pageTitle' /></h1>
+        <div className='options-container'>
+            <Option>
+                <Header icon={PhraseIcon}><Translate id='recoverAccount.phrase.title' /></Header>
+                <P><Translate id='recoverAccount.phrase.desc' /></P>
+                <FormButton
+                    color='dark-green'
+                    linkTo={`/recover-seed-phrase${locationSearch}`}
+                    onClick={() => Mixpanel.track('IE Click seed phrase recovery button')}
+                    data-test-id="recoverAccountWithPassphraseButton"
+                    id='IE Click seed phrase recovery button'
+                >
+                    <Translate id='button.recoverAccount' />
+                </FormButton>
+            </Option>
+        </div>
+    </StyledContainer>
+);
 
 export default RecoverAccount;
