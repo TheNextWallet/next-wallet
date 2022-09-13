@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { COLORS, MEDIA_QUERY } from '../../utils/theme';
 import FormButton from '../common/FormButton';
-import DaoCard from './DaoCard';
+import DaoItem from './DaoItem';
 import { useDao } from './hooks';
 
 const Styles = {
@@ -63,12 +63,12 @@ const Styles = {
 export const Dao = () => {
     const {data} = useDao();
 
-    return data !== null ? data.length ? ( 
+    return data !== null ? data.length ? (
         <Styles.Container>
             {data.map((item) => (
-                <DaoCard key={item.id} {...item} />
+                <DaoItem key={item.id} {...item} />
             ))}
-        </Styles.Container> 
+        </Styles.Container>
     ) : (
         <Styles.NotFound>
             <Styles.Text>Looks like you don't have any DAO’s.</Styles.Text>

@@ -14,7 +14,7 @@ const Styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: '10px',
+        marginRight: '15px',
 
         '&>svg': {
             width: '30.72px',
@@ -29,7 +29,7 @@ const Styles = {
         width: "64px",
         border: "1px",
         borderRadius: "50%",
-        marginRight: '10px',
+        marginRight: '15px',
     })
 }
 

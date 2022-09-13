@@ -22,7 +22,9 @@ const fetchData = (url) => {
 };
 
 const parseDaoMetadata = (metadata) => {
-    if (!metadata) return {};
+    if (!metadata) {
+        return {};
+    }
 
     const fromBase64ToObj = (str) => JSON.parse(Buffer.from(str, 'base64').toString('utf-8'));
     const toAstroDaoImageUrl = (id) => id && `https://sputnik-dao.s3.eu-central-1.amazonaws.com/${id}`;
@@ -32,7 +34,7 @@ const parseDaoMetadata = (metadata) => {
         flagCover: toAstroDaoImageUrl(meta.flagCover),
         flagLogo: toAstroDaoImageUrl(meta.flagLogo),
     };
-}
+};
 
 export const useDao = () => {
     const [loading, setLoading] = useState(false);
