@@ -35,82 +35,89 @@ const StyledContainer = styled.form`
             margin: 55px 0 5px 0;
         }
     }
+
+    .use-max-containter {
+        display: flex;
+        justify-content: center;
+    }
 `;
 
-const EnterAmount = ({ 
-    amount,
-    rawAmount,
-    onChangeAmount,
-    onSetMaxAmount,
-    availableToSend,
-    continueAllowed,
-    onContinue,
-    onClickCancel,
-    selectedToken,
-    onClickSelectToken,
-    error,
-    isMobile
-}) => {
-
-    return (
-        <StyledContainer 
-            className='buttons-bottom'
-            onSubmit={(e) => {
-                onContinue(e);
-                e.preventDefault();
-            }}
-            novalidate
-        >
-            <TabSelector/>
-            <div className='amount-input-wrapper'>
-                <AmountInput
-                    value={amount}
-                    onChange={onChangeAmount}
-                    error={error}
-                    autoFocus={!isMobile}
-                />
+const EnterAmount = (
+    {
+        amount,
+        rawAmount,
+        onChangeAmount,
+        onSetMaxAmount,
+        availableToSend,
+        continueAllowed,
+        onContinue,
+        onClickCancel,
+        selectedToken,
+        onClickSelectToken,
+        error,
+        isMobile
+    }
+) => (
+    <StyledContainer
+        className='buttons-bottom'
+        onSubmit={(e) => {
+            onContinue(e);
+            e.preventDefault();
+        }}
+        novalidate
+    >
+        <TabSelector />
+        <div className='amount-input-wrapper'>
+            <AmountInput
+                value={amount}
+                onChange={onChangeAmount}
+                error={error}
+                autoFocus={!isMobile}
+            />
+        </div>
+        {selectedToken.onChainFTMetadata?.symbol === 'NEAR' && (
+            <div className='usd-amount'>
+                <Balance amount={rawAmount} showBalanceInNEAR={false} />
             </div>
-            {selectedToken.onChainFTMetadata?.symbol === 'NEAR' && (
-                <div className='usd-amount'>
-                    <Balance amount={rawAmount} showBalanceInNEAR={false}/>
-                </div>
-            )}
+        )}
+        <div className='use-max-containter'>
             <FormButton
                 onClick={onSetMaxAmount}
                 type='button'
-                color='light-blue'
+                color='dark-green'
                 className='small rounded'
             >
-                <Translate id='button.useMax'/>
+                <Translate id='button.useMax' />
             </FormButton>
-            <SelectTokenButton
-                token={selectedToken}
-                onClick={onClickSelectToken}
-            />
-            <BalanceDetails
-                availableToSend={availableToSend}
-                selectedToken={selectedToken}
-            />
-            <div className='buttons-bottom-buttons'>
-                {/* TODO: Add error state */}
-                <FormButton
-                    type='submit'
-                    disabled={!continueAllowed}
-                    data-test-id="sendMoneyPageSubmitAmountButton"
-                >
-                    <Translate id='button.continue'/>
-                </FormButton>
-                <FormButton
-                    type='button'
-                    onClick={onClickCancel}
-                    className='link'
-                    color='gray'
-                >
-                    <Translate id='button.cancel'/>
-                </FormButton>
-            </div>
-        </StyledContainer>
-    );
-};
+        </div>
+        <SelectTokenButton
+            token={selectedToken}
+            onClick={onClickSelectToken}
+        />
+        <BalanceDetails
+            availableToSend={availableToSend}
+            selectedToken={selectedToken}
+        />
+        <div className='buttons-bottom-buttons'>
+            {/* TODO: Add error state */}
+            <FormButton
+                type='submit'
+                color="light-green"
+                disabled={!continueAllowed}
+                data-test-id="sendMoneyPageSubmitAmountButton"
+            >
+                <Translate id='button.continue' />
+            </FormButton>
+            <FormButton
+                type='button'
+                onClick={onClickCancel}
+                className='link'
+                color='gray'
+            >
+                <Translate id='button.cancel' />
+            </FormButton>
+        </div>
+    </StyledContainer>
+);
 
 export default EnterAmount;

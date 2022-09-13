@@ -333,7 +333,7 @@ class Routing extends Component {
                         )}
 
                         <NavigationWrapper />
-                        <GlobalAlert />
+                        {/*<GlobalAlert />*/}
                         <WalletMigration
                             open={this.state.openTransferPopup}
                             history={this.props.history}
