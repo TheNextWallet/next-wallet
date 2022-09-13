@@ -5,6 +5,7 @@ import { format } from 'timeago.js';
 
 import IconTStake from '../../images/IconTStake';
 import classNames from '../../utils/classNames';
+import { COLORS } from '../../utils/theme';
 import Balance from '../common/balance/Balance';
 import SafeTranslate from '../SafeTranslate';
 import CodeIcon from '../svg/CodeIcon';
@@ -12,7 +13,6 @@ import DownArrowIcon from '../svg/DownArrowIcon';
 import KeyIcon from '../svg/KeyIcon';
 import SendIcon from '../svg/SendIcon';
 import UserIcon from '../svg/UserIcon';
-
 
 const StyledContainer = styled.div`
     display: flex;
@@ -29,38 +29,42 @@ const StyledContainer = styled.div`
     }
 
     .symbol {
-        min-width: 40px;
-        min-height: 40px;
-        width: 40px;
-        height: 40px;
-        border: 1px solid #F0F0F1;
+        min-width: 50px;
+        min-height: 50px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-right: 14px;
+        margin-right: 20px;
+        background: ${COLORS.darkGreen};
     }
 
     .desc {
         overflow: hidden;
         font-weight: 700;
-        color: #24272a;
+        font-size: 18px;
+        line-height: 24px;
+        color: ${COLORS.beige};
         min-width: 0;
+        margin-right: 40px;
 
         > span {
-            font-weight: normal;
-            color: #A2A2A8;
             overflow: hidden;
             display: block;
             text-overflow: ellipsis;
             white-space: nowrap;
-            margin-right: 20px;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: ${COLORS.lightText};
 
             > span {
-                color: #3F4045;
+                color: ${COLORS.lightText};
                 
                 :first-of-type {
-                    color: #A2A2A8;
+                    color: ${COLORS.lightText};
                 }
 
             }
@@ -75,10 +79,12 @@ const StyledContainer = styled.div`
 
         .value {
             font-weight: 700;
-            color: #24272a;
             white-space: nowrap;
             display: flex;
             align-items: center;
+            font-size: 14px;
+            line-height: 24px;
+            color: ${COLORS.beige};
 
             &.transferred {
                 &::before {
@@ -94,20 +100,11 @@ const StyledContainer = styled.div`
             }
         }
         .time {
-            color: #A2A2A8;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: ${COLORS.lightText};
             text-align: right;
-        }
-    }
-
-    .send-icon {
-        path {
-            stroke: #0072CE;
-        }
-    }
-    
-    .down-arrow-icon {
-        path {
-            stroke: #00C08B;
         }
     }
 `;
@@ -173,16 +170,16 @@ export const ActionMessage = ({ transaction, actionArgs, actionKind, accountId }
 
 const translateId = (transaction, actionArgs, actionKind, accountId) => (
     `${actionKind
-        }${actionKind === 'AddKey'
-            ? actionArgs.access_key && actionArgs.access_key.permission.permission_details
-                ? '.forContract'
-                : '.forReceiver'
-            : ''
-        }${actionKind === 'Transfer'
-            ? transaction.signer_id === accountId
-                ? '.transferred'
-                : '.received'
-            : ''
+    }${actionKind === 'AddKey'
+        ? actionArgs.access_key && actionArgs.access_key.permission.permission_details
+            ? '.forContract'
+            : '.forReceiver'
+        : ''
+    }${actionKind === 'Transfer'
+        ? transaction.signer_id === accountId
+            ? '.transferred'
+            : '.received'
+        : ''
     }`
 );
 
@@ -197,14 +194,14 @@ export const translateData = (transaction, actionArgs, actionKind) => ({
 
 const ActionIcon = ({ actionKind, receiverId, accountId }) => (
     <div className='symbol'>
-        {actionKind === 'CreateAccount' && <UserIcon color='#0072CE' />}
-        {actionKind === 'DeleteAccount' && <UserIcon color='#ff585d'/>}
-        {actionKind === 'DeployContract' && <CodeIcon />}
-        {actionKind === 'FunctionCall' && <CodeIcon />}
-        {actionKind === 'Transfer' && (receiverId === accountId ? <DownArrowIcon /> : <SendIcon/>)}
-        {actionKind === 'Stake' && <IconTStake />}
-        {actionKind === 'AddKey' && <KeyIcon />}
-        {actionKind === 'DeleteKey' && <KeyIcon color='#ff585d' />}
+        {actionKind === 'CreateAccount' && <UserIcon color={COLORS.green} />}
+        {actionKind === 'DeleteAccount' && <UserIcon color={COLORS.green} />}
+        {actionKind === 'DeployContract' && <CodeIcon color={COLORS.green} />}
+        {actionKind === 'FunctionCall' && <CodeIcon color={COLORS.green} />}
+        {actionKind === 'Transfer' && (receiverId === accountId ? <DownArrowIcon color={COLORS.green} /> : <SendIcon color={COLORS.green} />)}
+        {actionKind === 'Stake' && <IconTStake color={COLORS.green} />}
+        {actionKind === 'AddKey' && <KeyIcon color={COLORS.green} />}
+        {actionKind === 'DeleteKey' && <KeyIcon color={COLORS.green}  />}
     </div>
 );
 

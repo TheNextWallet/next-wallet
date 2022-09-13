@@ -3,11 +3,12 @@ import { Translate } from 'react-localize-redux';
 import styled from 'styled-components';
 
 import classNames from '../../../utils/classNames';
+import { COLORS } from '../../../utils/theme';
 import InputAccountId from './InputAccountId';
 
 const StyledContainer = styled.div`
-    background-color: #FAFAFA;
-    border: 2px solid #FAFAFA;
+    background-color: ${COLORS.darkGray};
+    color: ${COLORS.lightText} !important;
     display: flex;
     border-radius: 8px;
     transition: 100ms;
@@ -20,47 +21,51 @@ const StyledContainer = styled.div`
     overflow-x: hidden;
 
     &.focus {
-        border-color: #0072ce;
-        background-color: white;
-        box-shadow: 0 0 0 2pt #C8E3FC;
+        border: 2px solid ${COLORS.green};
+        box-shadow: 0 0 0 2pt ${COLORS.green};
+        color: ${COLORS.beige};
     }
 
     &.problem {
-        border: 2px solid #ff585d;
-        background-color: white;
+        border: 2px solid ${COLORS.lightRed};
 
         &.focus {
-            box-shadow: 0px 0px 0px 2pt #FFBDBE;
+            box-shadow: 0 0 0 2pt ${COLORS.red};
         }
     }
 
     &.success {
-        border: 2px solid #00C08B;
-        background-color: white;
-
+        color: ${COLORS.green};
         &.focus {
-            box-shadow: 0px 0px 0px 2pt #c5ffef;
+            box-shadow: 0 0 0 2pt ${COLORS.green};
         }
     }
 `;
 
-const ReceiverInputWithLabel = ({
-    receiverId,
-    handleChangeReceiverId,
-    checkAccountAvailable,
-    setIsImplicitAccount,
-    localAlert,
-    clearLocalAlert,
-    autoFocus,
-    isSuccess,
-    isProblem
-}) => {
-
+const ReceiverInputWithLabel = (
+    {
+        receiverId,
+        handleChangeReceiverId,
+        checkAccountAvailable,
+        setIsImplicitAccount,
+        localAlert,
+        clearLocalAlert,
+        autoFocus,
+        isSuccess,
+        isProblem
+    }
+) => {
     const [inputHasFocus, setInputHasFocus] = useState(false);
     // TODO: Add remaining error style text
 
+    const containerClass = classNames([
+        { 'success': isSuccess },
+        { 'problem': isProblem },
+        { 'focus': inputHasFocus }
+    ]);
+
     return (
-        <StyledContainer className={classNames([{ 'success': isSuccess }, { 'problem': isProblem }, { 'focus': inputHasFocus }])}>
+        <StyledContainer className={containerClass}>
             <Translate id='sendV2.selectReceiver.receiverInputLabel' />
             <InputAccountId
                 accountId={receiverId}
@@ -75,7 +80,7 @@ const ReceiverInputWithLabel = ({
                 autoFocus={!receiverId && autoFocus}
                 isSuccess={isSuccess}
                 isProblem={isProblem}
-            />  
+            />
         </StyledContainer>
     );
 };

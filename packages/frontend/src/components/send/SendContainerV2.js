@@ -2,10 +2,11 @@ import BN from 'bn.js';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Mixpanel } from '../../mixpanel/index';
+// import { Mixpanel } from '../../mixpanel/index';
 import FungibleTokens from '../../services/FungibleTokens';
 import classNames from '../../utils/classNames';
 import isDecimalString from '../../utils/isDecimalString';
+import { COLORS } from '../../utils/theme';
 import { getNearAndFiatValue } from '../common/balance/helpers';
 import Container from '../common/styled/Container.css';
 import EnterAmount from './components/views/EnterAmount';
@@ -31,7 +32,7 @@ export const StyledContainer = styled(Container)`
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #272729;
+            color: ${COLORS.beige};
             font-weight: 600;
             font-size: 20px;
             word-break: break-all;
@@ -76,27 +77,29 @@ export const StyledContainer = styled(Container)`
     }
 `;
 
-const SendContainerV2 = ({
-    redirectTo,
-    fungibleTokens,
-    checkAccountAvailable,
-    localAlert,
-    clearLocalAlert,
-    accountId,
-    isMobile,
-    explorerUrl,
-    showNetworkBanner,
-    accountIdFromUrl,
-    activeView,
-    setActiveView,
-    estimatedTotalFees,
-    estimatedTotalInNear,
-    handleSendToken,
-    handleContinueToReview,
-    sendingToken,
-    transactionHash,
-    nearTokenFiatValueUSD
-}) => {
+const SendContainerV2 = (
+    {
+        redirectTo,
+        fungibleTokens,
+        checkAccountAvailable,
+        localAlert,
+        clearLocalAlert,
+        accountId,
+        isMobile,
+        explorerUrl,
+        showNetworkBanner,
+        accountIdFromUrl,
+        activeView,
+        setActiveView,
+        estimatedTotalFees,
+        estimatedTotalInNear,
+        handleSendToken,
+        handleContinueToReview,
+        sendingToken,
+        transactionHash,
+        nearTokenFiatValueUSD
+    }
+) => {
     const [userInputAmount, setUserInputAmount] = useState('');
     const [isMaxAmount, setIsMaxAmount] = useState(false);
 
@@ -106,9 +109,9 @@ const SendContainerV2 = ({
     useEffect(() => {
         // fungibleTokens contains balance data for each token -- we need to update local state every time it changes
         // TODO: Add a `byIdentity` reducer for faster lookups than .find()
-        let targetToken = fungibleTokens.find(({ contractName }) => 
+        let targetToken = fungibleTokens.find(({ contractName }) =>
             (contractName && contractName === selectedToken.contractName)
-        ) || fungibleTokens.find(({ onChainFTMetadata }) => 
+        ) || fungibleTokens.find(({ onChainFTMetadata }) =>
             onChainFTMetadata?.symbol === selectedToken.onChainFTMetadata?.symbol
         );
 
@@ -162,16 +165,14 @@ const SendContainerV2 = ({
                             const formattedTokenAmount = getFormattedTokenAmount(selectedToken.balance, selectedToken.onChainFTMetadata?.symbol, selectedToken.onChainFTMetadata?.decimals);
 
                             if (!new BN(selectedToken.balance).isZero()) {
-                                Mixpanel.track('SEND Use max amount');
+                                // Mixpanel.track('SEND Use max amount');
                                 setIsMaxAmount(true);
                                 setUserInputAmount(formattedTokenAmount.replace(/,/g, ''));
                             }
                         }}
                         availableToSend={selectedToken.balance}
                         continueAllowed={enterAmountIsComplete()}
-                        onContinue={() => {
-                            setActiveView(VIEWS.ENTER_RECEIVER);
-                        }}
+                        onContinue={() => setActiveView(VIEWS.ENTER_RECEIVER)}
                         onClickCancel={() => redirectTo('/')}
                         selectedToken={selectedToken}
                         onClickSelectToken={() => setActiveView(VIEWS.SELECT_TOKEN)}
@@ -204,7 +205,6 @@ const SendContainerV2 = ({
                         localAlert={localAlert}
                         clearLocalAlert={clearLocalAlert}
                         onClickContinue={() => {
-                            Mixpanel.track('SEND Click continue to review button');
                             handleContinueToReview({
                                 token: selectedToken,
                                 rawAmount: getRawAmount(),
@@ -219,7 +219,7 @@ const SendContainerV2 = ({
                     <Review
                         onClickCancel={() => {
                             redirectTo('/');
-                            Mixpanel.track('SEND Click cancel button');
+                            // Mixpanel.track('SEND Click cancel button');
                         }}
                         amount={getRawAmount()}
                         selectedToken={selectedToken}
@@ -238,9 +238,9 @@ const SendContainerV2 = ({
                 return (
                     <Success
                         amount={
-                        selectedToken.onChainFTMetadata?.symbol === 'NEAR'
-                            ? getNearAndFiatValue(getRawAmount(), nearTokenFiatValueUSD)
-                            : `${userInputAmount} ${selectedToken.onChainFTMetadata?.symbol}`
+                            selectedToken.onChainFTMetadata?.symbol === 'NEAR'
+                                ? getNearAndFiatValue(getRawAmount(), nearTokenFiatValueUSD)
+                                : `${userInputAmount} ${selectedToken.onChainFTMetadata?.symbol}`
                         }
                         receiverId={receiverId}
                         onClickContinue={() => redirectTo('/')}

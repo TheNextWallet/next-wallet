@@ -12,12 +12,15 @@ import {
     selectTransactionsLoading
 } from '../../redux/slices/transactions';
 import classNames from '../../utils/classNames';
+import { COLORS } from '../../utils/theme';
 import FormButton from '../common/FormButton';
 import ActivityBox from './ActivityBox';
 import ActivityDetailModal from './ActivityDetailModal';
 
 const StyledContainer = styled.div`
     width: 100%;
+    background: ${COLORS.darkGray};
+    font-family: 'Poppins', sans-serif;
 
     .no-activity {
         color: #B4B4B4;
@@ -26,30 +29,39 @@ const StyledContainer = styled.div`
 
     @media (min-width: 992px) {
         border: 2px solid #F0F0F0;
-        border-radius: 8px;
-        padding: 20px;
-
-        h2 {
-            margin-bottom: 15px !important;
-        }
+        border-radius: 30px;
+        padding: 30px;
 
         .activity-box {
             margin: 0 -20px;
-            padding: 15px 20px;
+            padding: 20px 30px;
             transition: 100ms;
 
-            :hover {
-                background-color: #f9f9f9;
-            }
-
             :first-of-type {
-                border-top: 1px solid #F0F0F1;
+                border-top: 1px solid rgb(255 255 255 / 10%);
             }
         }
     }
 
+    &&&&& > button {
+        background: ${COLORS.darkGreen};
+        border-radius: 15px;
+        width: 100%;
+        border: none;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 24px;
+        color: ${COLORS.green};
+        font-family: 'Poppins', sans-serif;
+        margin-top: 20px;
+        :hover {
+            background: ${COLORS.green};
+            color: ${COLORS.darkGreen};
+        }
+    }
+
     .activity-box {
-        border-bottom: 1px solid #F0F0F1;
+        border-top: 1px solid rgb(255 255 255 / 10%);
 
         :last-of-type {
             border-bottom: 0;
@@ -57,6 +69,10 @@ const StyledContainer = styled.div`
     }
 
     h2 {
+        font-weight: 700 !important;
+        font-size: 24px !important;
+        line-height: 24px !important;
+        color: ${COLORS.beige} !important;
         margin-top: 0 !important;
     }
 
@@ -92,6 +108,10 @@ const StyledContainer = styled.div`
             }
         }
     }
+    @media (max-width: 991px) {
+        padding: 32px 24px;
+        border-radius: 30px;
+    }
 `;
 
 const ActivitiesWrapper = () => {
@@ -111,8 +131,8 @@ const ActivitiesWrapper = () => {
 
     return (
         <StyledContainer>
-            <h2 className={classNames({'dots': activityLoader})}><Translate id='dashboard.activity' /></h2>
-            {transactions.map((transaction, i) => (
+            <h2 className={classNames({'dots': activityLoader})}>Activity</h2>
+            {transactions.slice(0, 4).map((transaction, i) => (
                 <ActivityBox
                     key={`${transaction.hash_with_index}-${transaction.block_hash}-${transaction.kind}`}
                     transaction={transaction}
@@ -127,7 +147,7 @@ const ActivitiesWrapper = () => {
                 <div className='no-activity'><Translate id='dashboard.noActivity' /></div>
             )}
             {transactionHash && (
-                <ActivityDetailModal 
+                <ActivityDetailModal
                     open={!!transactionHash}
                     onClose={() => setTransactionHash()}
                     accountId={accountId}
@@ -135,7 +155,6 @@ const ActivitiesWrapper = () => {
                 />
             )}
             <FormButton
-                color='gray-blue'
                 linkTo={`${EXPLORER_URL}/accounts/${accountId}`}
                 trackingId='Click to account on explorer'
             >

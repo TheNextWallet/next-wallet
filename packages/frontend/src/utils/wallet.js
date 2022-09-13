@@ -82,7 +82,7 @@ const WALLET_METADATA_METHOD = '__wallet__metadata';
 export const ACCOUNT_CHECK_TIMEOUT = 500;
 export const TRANSACTIONS_REFRESH_INTERVAL = 10000;
 
-const { 
+const {
     setLedgerTxSigned,
     showLedgerModal,
     handleShowConnectModal,
@@ -368,7 +368,7 @@ export default class Wallet {
 
                 await account.addKey(newKeyPair.getPublicKey());
                 await this.saveAccount(accountId, newKeyPair);
-                
+
                 if (!this.accountId) {
                     return this.makeAccountActive(accountId);
                 }
@@ -406,10 +406,10 @@ export default class Wallet {
         const localAccessKey = await this.getLocalAccessKey(this.accountId, accessKeys);
         const account = await this.getAccount(this.accountId);
         const keysToRemove = accessKeys.filter(({
-            public_key,
-            access_key: { permission },
-            meta: { type }
-        }) => permission === 'FullAccess' && type !== 'ledger' && !(localAccessKey && public_key === localAccessKey.public_key));
+                                                    public_key,
+                                                    access_key: { permission },
+                                                    meta: { type }
+                                                }) => permission === 'FullAccess' && type !== 'ledger' && !(localAccessKey && public_key === localAccessKey.public_key));
 
         const WALLET_METADATA_METHOD = '__wallet__metadata';
         let newLocalKeyPair;
@@ -489,11 +489,11 @@ export default class Wallet {
         return available;
     }
     async createNewAccountWithNearContract({
-        account,
-        newAccountId,
-        newPublicKey,
-        newInitialBalance
-    }) {
+                                               account,
+                                               newAccountId,
+                                               newPublicKey,
+                                               newInitialBalance
+                                           }) {
         const {
             status: { SuccessValue: createResultBase64 },
             transaction: { hash: transactionHash },
@@ -746,19 +746,19 @@ export default class Wallet {
         }
 
         const checkedAccountIds = (await Promise.all(
-            accountIds
-                .map(async (accountId) => {
-                    try {
-                        const accountKeys = await (await this.getAccount(accountId)).getAccessKeys();
-                        return accountKeys.find(({ public_key }) => public_key === publicKey.toString()) ? accountId : null;
-                    } catch (error) {
-                        if (error.toString().indexOf('does not exist while viewing') !== -1) {
-                            return null;
+                accountIds
+                    .map(async (accountId) => {
+                        try {
+                            const accountKeys = await (await this.getAccount(accountId)).getAccessKeys();
+                            return accountKeys.find(({ public_key }) => public_key === publicKey.toString()) ? accountId : null;
+                        } catch (error) {
+                            if (error.toString().indexOf('does not exist while viewing') !== -1) {
+                                return null;
+                            }
+                            throw error;
                         }
-                        throw error;
-                    }
-                })
-        )
+                    })
+            )
         )
             .filter((accountId) => accountId);
 

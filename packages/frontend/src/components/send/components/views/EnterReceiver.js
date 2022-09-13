@@ -3,6 +3,7 @@ import { Translate } from 'react-localize-redux';
 import { Textfit } from 'react-textfit';
 import styled from 'styled-components';
 
+import { COLORS } from '../../../../utils/theme';
 import BackArrowButton from '../../../common/BackArrowButton';
 import FormButton from '../../../common/FormButton';
 import RawTokenAmount from '../RawTokenAmount';
@@ -14,6 +15,11 @@ const StyledContainer = styled.form`
         max-width: 85%;
         overflow: hidden;
         text-align: center;
+
+        color: ${COLORS.green};
+        .currency {
+            color: ${COLORS.beige};
+        }
     }
 
     .input-sub-label {
@@ -25,19 +31,21 @@ const StyledContainer = styled.form`
     }
 `;
 
-const EnterReceiver = ({
-    onClickGoBack,
-    onClickCancel,
-    amount,
-    selectedToken,
-    receiverId,
-    handleChangeReceiverId,
-    checkAccountAvailable,
-    localAlert,
-    clearLocalAlert,
-    onClickContinue,
-    isMobile
-}) => {
+const EnterReceiver = (
+    {
+        onClickGoBack,
+        onClickCancel,
+        amount,
+        selectedToken,
+        receiverId,
+        handleChangeReceiverId,
+        checkAccountAvailable,
+        localAlert,
+        clearLocalAlert,
+        onClickContinue,
+        isMobile
+    }
+) => {
     const [isImplicitAccount, setIsImplicitAccount] = useState(false);
     const hasAccountValidationError = localAlert && localAlert.show && !localAlert.success;
     const validAccountId = hasAccountValidationError ? null : receiverId;
@@ -64,7 +72,7 @@ const EnterReceiver = ({
             }}
         >
             <div className='header'>
-                <BackArrowButton onClick={onClickGoBack} />
+                <BackArrowButton onClick={onClickGoBack} color={COLORS.lightRed}/>
                 <div className='token-amount'>
                     <Textfit mode='single' max={20}>
                         <RawTokenAmount
@@ -96,6 +104,7 @@ const EnterReceiver = ({
                 <FormButton
                     type='submit'
                     disabled={isLoading || isProblem}
+                    color='light-green'
                     data-test-id="sendMoneyPageSubmitAccountIdButton"
                 >
                     <Translate id='button.continue' />
