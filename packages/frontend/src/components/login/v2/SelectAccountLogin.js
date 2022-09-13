@@ -26,7 +26,7 @@ export default ({
     failureAndSuccessUrlsAreValid,
     accountExists
 }) => (
-    <Container className='small-centered border'>
+    <Container className='small-centered'>
         <LoginStyle className={loginAccessType === LOGIN_ACCESS_TYPES.FULL_ACCESS ? 'full-access' : ''}>
             <h3><Translate id='login.v2.connectWithNear.title' /></h3>
             <div className='desc'>
@@ -57,7 +57,7 @@ export default ({
             <FormButtonGroup>
                 <FormButton
                     onClick={onClickCancel}
-                    color='gray-blue'
+                    color='dark-green'
                     disabled={!failureAndSuccessUrlsAreValid}
                 >
                     <Translate id='button.cancel' />
@@ -65,6 +65,7 @@ export default ({
                 <FormButton
                     onClick={onClickNext}
                     disabled={!failureAndSuccessUrlsAreValid || accountExists === false}
+                    color='light-green'
                 >
                     <Translate id='button.next' />
                 </FormButton>

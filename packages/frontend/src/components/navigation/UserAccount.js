@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { COLORS } from '../../utils/theme';
 import classNames from '../../utils/classNames';
+import { COLORS } from '../../utils/theme';
 import ChevronIcon from '../svg/ChevronIcon';
 import UserIcon from '../svg/UserIcon';
-
 
 const Container = styled.div`
     background: #F0F0F1;
@@ -17,6 +16,7 @@ const Container = styled.div`
     cursor: pointer;
     user-select: none;
     height: 60px;
+    margin-left: auto;
     
     .user-icon {
         min-width: 36px;

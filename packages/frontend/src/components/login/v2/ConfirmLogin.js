@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Translate } from 'react-localize-redux';
 
 import { LOGIN_ACCESS_TYPES } from '../../../routes/LoginWrapper';
+import { COLORS } from '../../../utils/theme';
 import AlertBanner from '../../common/AlertBanner';
 import FormButton from '../../common/FormButton';
 import FormButtonGroup from '../../common/FormButtonGroup';
@@ -38,9 +39,9 @@ export default ({
 
     return (
         <>
-            <Container className='small-centered border'>
+            <Container className='small-centered'>
                 <LoginStyle className='confirm-login'>
-                    <SwapGraphic className='swap-graphic' />
+                    <SwapGraphic className='swap-graphic' color={COLORS.green} colorBackground={COLORS.black} />
                     <h3>
                         <Translate id='login.v2.connectConfirm.title'/>
                         <div>{signedInAccountId}</div>
@@ -69,7 +70,7 @@ export default ({
                     <FormButtonGroup>
                         <FormButton
                             onClick={onClickCancel}
-                            color='gray-blue'
+                            color='dark-green'
                             disabled={loggingIn}
                         >
                             <Translate id='button.cancel' />
@@ -85,6 +86,7 @@ export default ({
                             disabled={loggingIn || !successUrlIsValid}
                             sending={loggingIn}
                             sendingString='button.connecting'
+                            color='light-green'
                         >
                             <Translate id='button.connect' />
                         </FormButton>

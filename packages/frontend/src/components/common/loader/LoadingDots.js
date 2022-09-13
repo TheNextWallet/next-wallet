@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { COLORS } from '../../../utils/theme';
+
 const StyledContainer = styled.div`
     text-align: center;
     span {
@@ -9,7 +11,7 @@ const StyledContainer = styled.div`
         width: 5px;
         height: 5px;
         margin: 4px;
-        background-color: #F0F0F1;
+        background-color: ${COLORS.green};
         border-radius: 50%;
         animation: loading 0.8s infinite alternate;
 
@@ -29,21 +31,23 @@ const StyledContainer = styled.div`
 
     @keyframes loading {
         0% {
-            background-color: #8FCDFF;
+            background-color: ${COLORS.beige};
         }
         100% {
-            background-color: #F0F0F1;
+            background-color: ${COLORS.green};
         }
     }
 `;
 
-export default () => (
+const LoadingDots = () => (
     <StyledContainer className='loading-dots'>
         <div>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+            <span />
+            <span />
+            <span />
+            <span />
         </div>
     </StyledContainer>
 );
+
+export default LoadingDots;
