@@ -16,7 +16,6 @@ const Container = styled.div`
     cursor: pointer;
     user-select: none;
     height: 60px;
-    margin-left: auto;
     
     .user-icon {
         min-width: 36px;
