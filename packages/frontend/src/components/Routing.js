@@ -29,7 +29,7 @@ import { SetupPassphraseNewAccountWrapper } from '../routes/SetupPassphraseNewAc
 import { SetupRecoveryImplicitAccountWrapper } from '../routes/SetupRecoveryImplicitAccountWrapper';
 import { SignWrapper } from '../routes/SignWrapper';
 import { VerifyOwnerWrapper } from '../routes/VerifyOwnerWrapper';
-import WalletWrapper from '../routes/WalletWrapper';
+import { WalletWrapper } from '../routes/WalletWrapper';
 import translations_en from '../translations/en.global.json';
 import classNames from '../utils/classNames';
 import getBrowserLocale from '../utils/getBrowserLocale';
@@ -333,7 +333,7 @@ class Routing extends Component {
                         )}
 
                         <NavigationWrapper />
-                        {/*<GlobalAlert />*/}
+                        <GlobalAlert />
                         <WalletMigration
                             open={this.state.openTransferPopup}
                             history={this.props.history}

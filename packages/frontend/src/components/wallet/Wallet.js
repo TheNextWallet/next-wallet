@@ -1,5 +1,6 @@
 import React from 'react';
 import { Translate } from 'react-localize-redux';
+import { Textfit } from 'react-textfit';
 import styled from 'styled-components';
 
 import { isWhitelabel } from '../../config/whitelabel';
@@ -8,12 +9,18 @@ import classNames from '../../utils/classNames';
 import { COLORS } from '../../utils/theme';
 import { SHOW_NETWORK_BANNER } from '../../utils/wallet';
 import { getTotalBalanceInFiat } from '../common/balance/helpers';
+import FormButton from '../common/FormButton';
 import RemoveLinkRecoveryBanner from '../common/RemoveLinkRecoveryBanner';
 import Container from '../common/styled/Container.css';
+import Tooltip from '../common/Tooltip';
+import DaoIcon from '../svg/DaoIcon';
+import DownArrowIcon from '../svg/DownArrowIcon';
+import ReportsIcon from '../svg/ReportsIcon';
+import UpArrowIcon from '../svg/UpArrowIcon';
 import ActivitiesWrapper from './ActivitiesWrapper';
+import AllTokensTotalBalanceUSD from './AllTokensTotalBalanceUSD';
 import CreateCustomNameModal from './CreateCustomNameModal';
 import CreateFromImplicitSuccessModal from './CreateFromImplicitSuccessModal';
-import FungibleTokens from './FungibleTokens';
 import LinkDropSuccessModal from './LinkDropSuccessModal';
 import NFTs from './NFTs';
 import { ZeroBalanceAccountImportedModal } from './ZeroBalanceAccountImportedModal';
@@ -143,7 +150,7 @@ const StyledContainer = styled(Container)`
             margin-bottom: 20px;
 
             .send {
-                margin-bottom: 0;
+                margin-bottom: 0px;
                 > div {
                     background-color: #FF7294;
                 }
@@ -155,7 +162,7 @@ const StyledContainer = styled(Container)`
             }
 
             .receive {
-                margin-bottom: 0;
+                margin-bottom: 0px;
                 > div {
                     background-color: ${COLORS.green};
                 }
@@ -198,7 +205,7 @@ const StyledContainer = styled(Container)`
                 background-color: transparent !important;
                 border: 0;
                 padding: 0;
-                margin: 0 30px;
+                margin: 0px 30px;
                 border-radius: 0;
                 font-size: 16px;
                 line-height: 24px;
@@ -324,7 +331,7 @@ const StyledContainer = styled(Container)`
     }
 `;
 
-const Wallet = (
+export function Wallet(
     {
         tab,
         setTab,
@@ -344,7 +351,7 @@ const Wallet = (
         handleSetZeroBalanceAccountImportMethod,
         userRecoveryMethods
     }
-) => {
+) {
     const currentLanguage = getCurrentLanguage();
     const totalAmount = getTotalBalanceInFiat(
         fungibleTokensList,
@@ -355,8 +362,12 @@ const Wallet = (
         || userRecoveryMethods.some(({ kind }) => kind === 'phone'));
 
     return (
-        <StyledContainer className={SHOW_NETWORK_BANNER ? 'showing-banner' : ''}>
-            {shouldShowRemoveLinkRecoveryBanner && <RemoveLinkRecoveryBanner />}
+        <StyledContainer
+            className={SHOW_NETWORK_BANNER ? 'showing-banner' : ''}
+        >
+            {shouldShowRemoveLinkRecoveryBanner &&
+                <RemoveLinkRecoveryBanner />
+            }
             <div className="split">
                 <div className="left">
                     <div className="tab-selector">
@@ -426,6 +437,70 @@ const Wallet = (
             )}
         </StyledContainer>
     );
-};
+}
 
-export default Wallet;
+const FungibleTokens = ({ fungibleTokensList }) => {
+    return (
+        <>
+            <div className='total-balance'>
+                <Textfit mode='single' max={48}>
+                    <AllTokensTotalBalanceUSD allFungibleTokens={fungibleTokensList} />
+                </Textfit>
+            </div>
+            <div className="sub-title balance">
+                <Translate id="wallet.availableBalance" />{' '}
+                <Tooltip translate="availableBalanceInfo" />
+            </div>
+            <div className="buttons">
+                <FormButton
+                    color="dark-gray"
+                    linkTo="/send-money"
+                    trackingId="Click Send on Wallet page"
+                    data-test-id="balancesTab.send"
+                    className="send"
+                >
+                    <div>
+                        <UpArrowIcon />
+                    </div>
+                    <Translate id="button.send" />
+                </FormButton>
+                <FormButton
+                    color="dark-gray"
+                    linkTo="/receive-money"
+                    trackingId="Click Receive on Wallet page"
+                    data-test-id="balancesTab.receive"
+                    className="receive"
+                >
+                    <div>
+                        <DownArrowIcon />
+                    </div>
+                    <Translate id="button.receive" />
+                </FormButton>
+                <FormButton
+                    color="dark-gray"
+                    linkTo="/dao"
+                    trackingId="Click Receive on Wallet page"
+                    data-test-id="balancesTab.receive"
+                    className="dao"
+                >
+                    <div>
+                        <DaoIcon />
+                    </div>
+                    DAO
+                </FormButton>
+                <FormButton
+                    color="dark-gray"
+                    linkTo="/"
+                    trackingId="Click Receive on Wallet page"
+                    data-test-id="balancesTab.receive"
+                    className="report"
+                >
+                    <div>
+                        <ReportsIcon />
+                    </div>
+                    Reports
+                </FormButton>
+            </div>
+        </>
+    );
+};

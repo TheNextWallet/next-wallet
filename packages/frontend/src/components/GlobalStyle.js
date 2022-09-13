@@ -22,6 +22,7 @@ export default createGlobalStyle`
             padding: 0;
             min-height: 100vh !important;
 
+            background: #111111;
             position: relative;
             color: #72727A;
             font-size: 14px !important;
