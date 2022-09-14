@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector, useReducer } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { handleVoutingAction } from "../../redux/actions/vouting";
@@ -164,7 +164,6 @@ const DaoItem = (props) => {
         amount: "",
     });
     const handleOpen = () => setOpen((state) => !state);
-    const [, forceUpdate] = useReducer(x => x + 1, 0);
 
     const accountId = useSelector(selectAccountId);
 
@@ -178,7 +177,6 @@ const DaoItem = (props) => {
         try {
             await dispatch(handleVoutingAction(voutingParams));
             setConfirm(false);
-            forceUpdate();
         } finally {
             setLoading(false);
         }
