@@ -2,12 +2,12 @@ import React from 'react';
 import { Translate } from 'react-localize-redux';
 import styled from 'styled-components';
 
+import { COLORS } from '../../../utils/theme';
 import GlobeIcon from '../../svg/GlobeIcon';
 
 const StyledContainer = styled.a`
-    border: 1px solid #D6EDFF;
-    background-color: #F0F9FF;
-    color: #005497;
+    background-color: ${COLORS.darkGreen};
+    color: ${COLORS.green};
     padding: 6px 12px;
     border-radius: 40px;
     display: flex;
@@ -21,9 +21,11 @@ const StyledContainer = styled.a`
     }
 `;
 
-export default ({ appReferrer, contractIdUrl }) => (
+const ConnectWithApplication = ({ appReferrer, contractIdUrl }) => (
     <StyledContainer className='connect-with-application' href={contractIdUrl} target='_blank' rel='noreferrer'>
-        <GlobeIcon/>
+        <GlobeIcon color={COLORS.green} />
         {appReferrer || <Translate id='sign.unknownApp' />}
     </StyledContainer>
 );
+
+export default ConnectWithApplication;

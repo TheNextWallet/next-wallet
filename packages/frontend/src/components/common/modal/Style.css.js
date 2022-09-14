@@ -15,10 +15,11 @@ const Style = styled.div`
     z-index: 2000;
     max-width: ${(props) => {
     switch (props.modalSize) {
+        case 'ex': return '763';
         case 'lg': return '800';
         case 'md': return '550';
-        case 'sm': return '400'; 
-        case 'xs': return '300'; 
+        case 'sm': return '400';
+        case 'xs': return '300';
         default: return '650';
     }
 }}px;
@@ -66,12 +67,15 @@ const Style = styled.div`
         background-color: ${COLORS.darkGray};
         border-radius: 6px;
         transition: 0.3s;
-        padding: 25px;
+        padding: 64px;
         position: relative;
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         margin: 14px;
         max-height: 90vh;
         overflow-y: auto;
+
+        background: #232323;
+        border-radius: 30px;
     }
 
     &.mobile-action-sheet {
@@ -115,13 +119,18 @@ const Style = styled.div`
                     max-width: 25px;
                     min-height: 25px;
                     max-height: 25px;
-        
+
                     svg {
                         width: 25px;
                         height: 25px;
                     }
                 }
             }
+        }
+    }
+    @media (max-width: 768px) {
+        .modal {
+            padding: 32px;
         }
     }
 `;

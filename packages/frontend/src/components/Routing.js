@@ -325,20 +325,20 @@ class Routing extends Component {
                 >
                     <ThemeProvider theme={theme}>
                         <ScrollToTop />
-                        {
-                            SHOW_MIGRATION_BANNER && (
-                                <MigrationBanner
-                                    account={account}
-                                    onTransfer={this.handleTransferClick} />
-                            )}
+                        {SHOW_MIGRATION_BANNER && (
+                            <MigrationBanner
+                                account={account}
+                                onTransfer={this.handleTransferClick}
+                            />
+                        )}
 
-                        {/* <NetworkBanner account={account} /> */}
                         <NavigationWrapper />
                         <GlobalAlert />
                         <WalletMigration
                             open={this.state.openTransferPopup}
                             history={this.props.history}
-                            onClose={this.closeTransferPopup} />
+                            onClose={this.closeTransferPopup}
+                        />
                         <LedgerConfirmActionModal />
                         <LedgerConnectModal />
                         {account.requestPending !== null && (
@@ -378,11 +378,7 @@ class Routing extends Component {
                                 exact
                                 path="/"
                                 render={(props) => (
-                                    <WalletWrapper
-                                        tab={tab}
-                                        setTab={setTab}
-                                        {...props}
-                                    />
+                                    <WalletWrapper tab={tab} setTab={setTab} {...props} />
                                 )}
                                 accountFound={accountFound}
                                 indexBySearchEngines={!accountFound}

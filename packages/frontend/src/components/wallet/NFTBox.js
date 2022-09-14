@@ -5,9 +5,11 @@ import styled from 'styled-components';
 import { EXPLORER_URL } from '../../config';
 import { redirectTo } from '../../redux/actions/account';
 import isDataURL from '../../utils/isDataURL';
+import { COLORS } from '../../utils/theme';
 import {NFTMedia} from '../nft/NFTMedia';
 import DefaultTokenIcon from '../svg/DefaultTokenIcon';
 import LoadMoreButtonWrapper from './LoadMoreButtonWrapper';
+
 const StyledContainer = styled.div`
     display: flex;
     justify-content: flex-start;
@@ -34,6 +36,9 @@ const StyledContainer = styled.div`
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        color: ${COLORS.beige};
+        margin: auto;
+        padding-top: 10px;
     }
 
     .symbol {
@@ -58,7 +63,7 @@ const StyledContainer = styled.div`
         a {
             font-weight: 700;
             font-size: 16px;
-            color: #24272a;
+            color: ${COLORS.beige};
         }
 
         span {
@@ -91,7 +96,7 @@ const StyledContainer = styled.div`
         flex-basis: 50%;
         max-width: 50%;
         padding: 15px 0;
-        color: black;
+        color: ${COLORS.beige};
 
         :nth-child(odd) {
             padding-right: 5px;
@@ -141,7 +146,10 @@ const NFTBox = ({ tokenDetails }) => {
                     }
                 </div>
                 <div className='desc'>
-                    <a href={`${EXPLORER_URL}/accounts/${contractName}`} title={name} target='_blank'
+                    <a
+                        href={`${EXPLORER_URL}/accounts/${contractName}`}
+                        title={name}
+                        target='_blank'
                         rel='noopener noreferrer'
                     >
                         {name}
@@ -154,7 +162,9 @@ const NFTBox = ({ tokenDetails }) => {
                     <div className='tokens'>
                         {ownedTokensMetadata.map(({ token_id, metadata: { mediaUrl, title } }, index) => {
                             return (
-                                <div className='nft' key={token_id}
+                                <div
+                                    className='nft'
+                                    key={token_id}
                                     onClick={() => dispatch(redirectTo(`/nft-detail/${contractName}/${token_id}`))}
                                 >
                                     <NFTMedia mediaUrl={mediaUrl} autoPlay={ index === 0}/>

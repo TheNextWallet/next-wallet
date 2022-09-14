@@ -8,19 +8,21 @@ import StyledModal from './Style.css';
 
 const modalRoot = document.getElementById('modal-root');
 
-function Modal({
-    isOpen,
-    onClose,
-    id,
-    modalSize,
-    modalClass,
-    children,
-    closeButton,
-    disableClose,
-    mobileActionSheet = true,
-    'data-test-id': testId,
-    style
-}) {
+function Modal(
+    {
+        isOpen,
+        onClose,
+        id,
+        modalSize,
+        modalClass,
+        children,
+        closeButton,
+        disableClose,
+        mobileActionSheet = true,
+        'data-test-id': testId,
+        style
+    }
+) {
     const background = React.createRef();
     const [fadeType, setFadeType] = useState(null);
     const [fullScreen, setFullScreen] = useState(null);
@@ -88,10 +90,19 @@ function Modal({
         }
     };
 
+    const wrapperClass = classNames([
+        'modal-wrapper',
+        `size-${modalSize}`,
+        `fade-${fadeType}`,
+        modalClass,
+        fullScreen,
+        { 'mobile-action-sheet' : mobileActionSheet }
+    ]);
+
     return ReactDom.createPortal(
         <StyledModal
             id={id}
-            className={classNames(['modal-wrapper', `size-${modalSize}`, `fade-${fadeType}`, modalClass, fullScreen, { 'mobile-action-sheet' : mobileActionSheet }])}
+            className={wrapperClass}
             role='dialog'
             modalSize={modalSize}
             onTransitionEnd={transitionEnd}
@@ -99,12 +110,10 @@ function Modal({
             style={style}
         >
             <div id='modal-container' className='modal'>
-                {closeButton && 
-                    <CloseButton device={closeButton} onClick={handleClick}/>
-                }
+                {closeButton && <CloseButton device={closeButton} onClick={handleClick}/>}
                 {children}
             </div>
-            <div className='background' onMouseDown={handleClick} ref={background}/>
+            <div className='background' onMouseDown={handleClick} ref={background} />
         </StyledModal>,
         modalRoot
     );

@@ -21,10 +21,7 @@ const { setZeroBalanceAccountImportMethod } = importZeroBalanceAccountActions;
 const { fetchRecoveryMethods } = recoveryMethodsActions;
 
 
-export function WalletWrapper({
-    tab,
-    setTab
-}) {
+export function WalletWrapper({ tab, setTab }) {
     const accountId = useSelector(selectAccountId);
     const accountExists = useSelector(selectAccountExists);
     const balance = useSelector(selectBalance);

@@ -15,10 +15,16 @@ const Container = styled.div`
     padding: 30px 30px 30px 40px;
     background: ${COLORS.darkGray};
     border-radius: 30px;
+    
+    .user-nav-container {
+        display: flex;
+        margin-left: auto;
+    }
 
     @media (min-width: 992px) {
         display: flex;
     }
+    
     align-items: center;
 
     img {
@@ -64,28 +70,30 @@ const DesktopContainer = (props) => {
     return (
         <Container>
             <Logo>NEXT.</Logo>
-            {showAllNavigationLinks && <NavLinks />}
-            <ConnectLedger />
-            {showNavLinks && (
-                <>
-                    <UserAccount
-                        accountId={account.accountId || account.localStorage?.accountId}
-                        onClick={toggleMenu}
-                        flowLimitationSubMenu={flowLimitationSubMenu}
-                    />
-                    <DesktopMenu
-                        show={menuOpen}
-                        toggleMenu={toggleMenu}
-                        accountId={account.accountId}
-                        accountIdLocalStorage={account.localStorage?.accountId}
-                        accounts={availableAccounts}
-                        handleSelectAccount={handleSelectAccount}
-                        accountsBalance={account.accountsBalance}
-                        balance={account.balance}
-                        refreshBalance={refreshBalance}
-                    />
-                </>
-            )}
+            <div className="user-nav-container">
+                {showAllNavigationLinks && <NavLinks />}
+                <ConnectLedger />
+                {showNavLinks && (
+                    <>
+                        <UserAccount
+                            accountId={account.accountId || account.localStorage?.accountId}
+                            onClick={toggleMenu}
+                            flowLimitationSubMenu={flowLimitationSubMenu}
+                        />
+                        <DesktopMenu
+                            show={menuOpen}
+                            toggleMenu={toggleMenu}
+                            accountId={account.accountId}
+                            accountIdLocalStorage={account.localStorage?.accountId}
+                            accounts={availableAccounts}
+                            handleSelectAccount={handleSelectAccount}
+                            accountsBalance={account.accountsBalance}
+                            balance={account.balance}
+                            refreshBalance={refreshBalance}
+                        />
+                    </>
+                )}
+            </div>
         </Container>
     );
 };

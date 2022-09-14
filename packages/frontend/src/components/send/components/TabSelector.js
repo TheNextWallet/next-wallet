@@ -5,23 +5,26 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { redirectTo } from '../../../redux/actions/account';
+import classNames from '../../../utils/classNames';
+import { COLORS } from '../../../utils/theme';
 import { SHOW_NETWORK_BANNER } from '../../../utils/wallet';
 
 const StyledContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    border: 1px solid #F0F0F1;
-    border-radius: 8px;
+    border-radius: 15px;
     overflow: hidden;
 
     > div {
         flex: 1;
+        margin: 10px 10px 10px 0;
+        border-radius: 15px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #F0F0F1;
-        color: #A2A2A8;
+        background-color: ${COLORS.darkGray};
+        color: ${COLORS.lightText};
         font-weight: 600;
         padding: 15px;
         cursor: pointer;
@@ -31,25 +34,31 @@ const StyledContainer = styled.div`
 
         &:not(.active) {
             :hover {
-                color: black;
+                color: darken(${COLORS.green}, 10%);
             }
         }
 
         &.active {
-            background-color: white;
-            color: #0072CE;
+            background-color: ${COLORS.green};
+            color: ${COLORS.black};
+            filter: drop-shadow(0px 10px 30px ${COLORS.green});
             cursor: default;
         }
+
+        
+    }
+    
+    .left-button {
+        margin: 10px 0 10px 10px;
     }
 
     @media (max-width: 500px) {
-        margin: -36px -14px 0 -14px;
         border-radius: 0;
         border-bottom: 0;
+    }
 
-        &.showing-banner {
-            margin: -45px -14px 0 -14px;
-        }
+    &.showing-banner {
+        background-color: ${COLORS.darkGray};
     }
 `;
 
@@ -64,19 +73,23 @@ const TabSelector = () => {
 
     return (
         <StyledContainer className={SHOW_NETWORK_BANNER ? 'showing-banner' : ''}>
-            <div 
+            <div
                 role='button'
-                className={pathname.includes(sendMoneyRoute) ? 'active' : ''}
+                // className={pathname.includes(sendMoneyRoute) ? 'active' : ''}
+                className={classNames([
+                    'left-button',
+                    { active: pathname.includes(sendMoneyRoute) }
+                ])}
                 onClick={!pathname.includes(sendMoneyRoute) ? () => dispatch(redirectTo(sendMoneyRoute)) : null}
             >
-                <Translate id='button.send'/>
+                <Translate id='button.send' />
             </div>
             <div
                 role='button'
                 className={pathname.includes(receiveMoneyRoute) ? 'active' : ''}
                 onClick={!pathname.includes(receiveMoneyRoute) ? () => dispatch(redirectTo(receiveMoneyRoute)) : null}
             >
-                <Translate id='button.receive'/>
+                <Translate id='button.receive' />
             </div>
         </StyledContainer>
     );

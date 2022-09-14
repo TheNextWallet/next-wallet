@@ -3,6 +3,7 @@ import { Translate } from 'react-localize-redux';
 import styled from 'styled-components';
 import { COLORS } from '../../../utils/theme';
 
+import { COLORS } from '../../../utils/theme';
 import ClickToCopy from '../../common/ClickToCopy';
 import CopyIcon from '../../svg/CopyIcon';
 
@@ -46,24 +47,19 @@ const StyledContainer = styled.div`
     }
 `;
 
-const AccountId = ({ accountId }) => {
-    return (
-        <StyledContainer>
-            <div className='top'>
-                <div><Translate id='input.accountId.title' /></div>
-                <ClickToCopy
-                    copy={accountId}
-                    className='copy-account-id'
-                >
-                    <CopyIcon/>
-                    <Translate id='copy.title' />
-                </ClickToCopy>
-            </div>
-            <div className='bottom'>
-                {accountId}
-            </div>
-        </StyledContainer>
-    );
-};
+const AccountId = ({ accountId }) => (
+    <StyledContainer>
+        <div className='top'>
+            <div><Translate id='input.accountId.title' /></div>
+            <ClickToCopy copy={accountId} className='copy-account-id'>
+                <CopyIcon/>
+                <Translate id='copy.title' />
+            </ClickToCopy>
+        </div>
+        <div className='bottom'>
+            {accountId}
+        </div>
+    </StyledContainer>
+);
 
 export default AccountId;

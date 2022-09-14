@@ -3,40 +3,35 @@ import { Translate } from 'react-localize-redux';
 import { Textfit } from 'react-textfit';
 import styled from 'styled-components';
 
-import {
-    CREATE_USN_CONTRACT,
-} from '../../../../../features';
 import { isWhitelabel } from '../../config/whitelabel';
 import getCurrentLanguage from '../../hooks/getCurrentLanguage';
 import classNames from '../../utils/classNames';
+import { COLORS } from '../../utils/theme';
 import { SHOW_NETWORK_BANNER } from '../../utils/wallet';
 import { getTotalBalanceInFiat } from '../common/balance/helpers';
 import FormButton from '../common/FormButton';
 import RemoveLinkRecoveryBanner from '../common/RemoveLinkRecoveryBanner';
 import Container from '../common/styled/Container.css';
 import Tooltip from '../common/Tooltip';
+import DaoIcon from '../svg/DaoIcon';
 import DownArrowIcon from '../svg/DownArrowIcon';
-import SendIcon from '../svg/SendIcon';
-import TopUpIcon from '../svg/TopUpIcon';
-import WrapIcon from '../svg/WrapIcon';
+import ReportsIcon from '../svg/ReportsIcon';
+import UpArrowIcon from '../svg/UpArrowIcon';
 import ActivitiesWrapper from './ActivitiesWrapper';
 import AllTokensTotalBalanceUSD from './AllTokensTotalBalanceUSD';
 import CreateCustomNameModal from './CreateCustomNameModal';
 import CreateFromImplicitSuccessModal from './CreateFromImplicitSuccessModal';
-import DepositNearBanner from './DepositNearBanner';
-import ExploreApps from './ExploreApps';
 import LinkDropSuccessModal from './LinkDropSuccessModal';
 import NFTs from './NFTs';
-import Sidebar from './Sidebar';
-import SidebarLight from './SidebarLight';
-import Tokens from './Tokens';
 import { ZeroBalanceAccountImportedModal } from './ZeroBalanceAccountImportedModal';
 
 const StyledContainer = styled(Container)`
+    font-family: 'Poppins', sans-serif;
     @media (max-width: 991px) {
         margin: -5px auto 0 auto;
         &.showing-banner {
             margin-top: -15px;
+            margin-bottom: 30px;
         }
     }
     
@@ -51,13 +46,16 @@ const StyledContainer = styled(Container)`
 
     .sub-title {
         font-size: 14px;
-        margin-bottom: 10px;
+        margin-bottom: 80px;
 
         &.balance {
-            color: #a2a2a8;
             margin-top: 0;
             display: flex;
             align-items: center;
+            font-size: 18px;
+            line-height: 24px;
+            color: ${COLORS.lightText};
+            z-index: 1;
         }
 
         &.tokens {
@@ -110,22 +108,36 @@ const StyledContainer = styled(Container)`
         display: flex;
         flex-direction: column;
         align-items: center;
+        max-width: 730px;
+        background: ${COLORS.darkGray};
+        border-radius: 30px;
+        position: relative;
+        padding: 30px;
+
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 
         > svg {
             margin-top: 25px;
         }
 
         .total-balance {
-            margin: 40px 0 10px 0;
+            margin: 80px 0 20px 0;
             width: 100%;
-            font-weight: 600;
             text-align: center;
-            color: #24272a;
+            font-weight: 700;
+            font-size: 54px;
+            line-height: 103.4%;
+            color: ${COLORS.beige};
+            z-index: 1;
         }
 
         @media (min-width: 992px) {
-            border: 2px solid #f0f0f0;
-            border-radius: 8px;
             height: max-content;
         }
 
@@ -133,16 +145,54 @@ const StyledContainer = styled(Container)`
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 30px 0;
-            width: 100%;
             flex-wrap: wrap;
-            margin: 30px -14px;
-            width: calc(100% + 28px);
+            z-index: 1;
+            margin-bottom: 20px;
 
-            @media (min-width: 992px) {
-                margin-left: 0;
-                margin-right: 0;
-                width: 100%;
+            .send {
+                margin-bottom: 0px;
+                > div {
+                    background-color: #FF7294;
+                }
+                :hover {
+                    > div {
+                        filter: drop-shadow(0px 10px 30px #FF7294);
+                    }
+                }
+            }
+
+            .receive {
+                margin-bottom: 0px;
+                > div {
+                    background-color: ${COLORS.green};
+                }
+                :hover {
+                    > div {
+                        filter: drop-shadow(0px 10px 30px ${COLORS.green});
+                    }
+                }
+            }
+
+            .dao {
+                > div {
+                    background-color: #7C56F6;
+                }
+                :hover {
+                    > div {
+                        filter: drop-shadow(0px 10px 30px #7C56F6);
+                    }
+                }
+            }
+
+            .report {
+                > div {
+                    background-color: #C6FA5A;
+                }
+                :hover {
+                    > div {
+                        filter: drop-shadow(0px 10px 30px #C6FA5A);
+                    }
+                }
             }
 
             button {
@@ -155,41 +205,32 @@ const StyledContainer = styled(Container)`
                 background-color: transparent !important;
                 border: 0;
                 padding: 0;
-                color: #3f4045;
-                font-weight: 400;
-                font-size: 14px;
-                margin: 20px 18px;
+                margin: 0px 30px;
                 border-radius: 0;
-
-                :hover {
-                    color: #3f4045;
-
-                    > div {
-                        background-color: black;
-                    }
-                }
+                font-size: 16px;
+                line-height: 24px;
+                font-weight: 400;
+                color: ${COLORS.lightText} !important;
 
                 > div {
-                    background-color: #272729;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    min-height: 56px;
-                    height: 56px;
-                    min-width: 56px;
-                    width: 56px;
-                    border-radius: 20px;
+                    min-height: 64px;
+                    height: 64px;
+                    min-width: 64px;
+                    width: 64px;
+                    border-radius: 50%;
                     margin-bottom: 10px;
                     transition: 100ms;
                 }
 
                 svg {
-                    width: 22px !important;
-                    height: 22px !important;
+                    width: 24px !important;
+                    height: 24px !important;
                     margin: 0 !important;
-
-                    path {
-                        stroke: white;
+                    path, rect {
+                        stroke: rgb(0, 5, 3);
                     }
                 }
             }
@@ -197,65 +238,43 @@ const StyledContainer = styled(Container)`
 
         .tab-selector {
             width: 100%;
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: space-around;
+            padding: 10px;
+            z-index: 1;
+            background: ${COLORS.black};
+            border-radius: 20px;
 
             > div {
                 flex: 1;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                padding: 25px 0;
-                border-bottom: 1px solid transparent;
-                color: black;
-                font-weight: 600;
-                font-size: 16px;
+                padding: 18px 0;
+                color: ${COLORS.black};
+                font-size: 18px;
+                line-height: 24px;
+                background-color: ${COLORS.green};
 
                 &.inactive {
-                    background-color: #fafafa;
-                    border-bottom: 1px solid #f0f0f1;
+                    background-color: transparent;
                     cursor: pointer;
-                    color: #a2a2a8;
+                    color: ${COLORS.lightText};
                     transition: color 100ms;
 
                     :hover {
-                        color: black;
+                        color: ${COLORS.green};
                     }
                 }
             }
 
             .tab-balances {
-                border-right: 1px solid transparent;
-
-                @media (max-width: 767px) {
-                    margin-left: -14px;
-                }
-
-                @media (min-width: 992px) {
-                    border-top-left-radius: 8px;
-                }
-
-                &.inactive {
-                    border-right: 1px solid #f0f0f1;
-                }
+                border-radius: 15px;
             }
 
             .tab-collectibles {
-                border-left: 1px solid transparent;
-
-                @media (max-width: 767px) {
-                    margin-right: -14px;
-                }
-
-                @media (min-width: 992px) {
-                    border-top-right-radius: 8px;
-                }
-
-                &.inactive {
-                    border-left: 1px solid #f0f0f1;
-                }
+                border-radius: 15px;
             }
         }
     }
@@ -295,35 +314,51 @@ const StyledContainer = styled(Container)`
             }
         }
     }
+
+    @media (max-width: 1199px) {
+        .left {
+            .buttons {
+                .send, .receive {
+                    margin-bottom: 30px;
+                }
+            }
+        }
+    }
+    @media (max-width: 991px) {
+        .left {
+            margin-bottom: 64px;
+        }
+    }
 `;
 
-export function Wallet({
-    tab,
-    setTab,
-    accountId,
-    accountExists,
-    balance,
-    linkdropAmount,
-    createFromImplicitSuccess,
-    createCustomName,
-    zeroBalanceAccountImportMethod,
-    fungibleTokensList,
-    tokensLoading,
-    availableAccounts,
-    sortedNFTs,
-    handleCloseLinkdropModal,
-    handleSetCreateFromImplicitSuccess,
-    handleSetCreateCustomName,
-    handleSetZeroBalanceAccountImportMethod,
-    userRecoveryMethods
-}) {
+export function Wallet(
+    {
+        tab,
+        setTab,
+        accountId,
+        accountExists,
+        balance,
+        linkdropAmount,
+        createFromImplicitSuccess,
+        createCustomName,
+        zeroBalanceAccountImportMethod,
+        fungibleTokensList,
+        tokensLoading,
+        sortedNFTs,
+        handleCloseLinkdropModal,
+        handleSetCreateFromImplicitSuccess,
+        handleSetCreateCustomName,
+        handleSetZeroBalanceAccountImportMethod,
+        userRecoveryMethods
+    }
+) {
     const currentLanguage = getCurrentLanguage();
     const totalAmount = getTotalBalanceInFiat(
         fungibleTokensList,
         currentLanguage
     );
 
-    const shouldShowRemoveLinkRecoveryBanner = !isWhitelabel && (userRecoveryMethods.some(({ kind }) => kind === 'email')
+    const shouldShowRemoveLinkRecoveryBanner = !isWhitelabel() && (userRecoveryMethods.some(({ kind }) => kind === 'email')
         || userRecoveryMethods.some(({ kind }) => kind === 'phone'));
 
     return (
@@ -370,12 +405,6 @@ export function Wallet({
                     )}
                 </div>
                 <div className="right">
-                    {isWhitelabel
-                        ? <SidebarLight availableAccounts={accountExists && availableAccounts} />
-                        : accountExists
-                            ? <Sidebar availableAccounts={availableAccounts} />
-                            : <ExploreApps />
-                    }
                     <ActivitiesWrapper />
                 </div>
             </div>
@@ -410,21 +439,7 @@ export function Wallet({
     );
 }
 
-const FungibleTokens = ({
-    balance,
-    tokensLoading,
-    fungibleTokens,
-    accountExists,
-    totalAmount,
-    currentLanguage,
-    fungibleTokensList
-}) => {
-    const zeroBalanceAccount = accountExists === false;
-    const currentFungibleTokens = fungibleTokens[0];
-    const hideFungibleTokenSection =
-        zeroBalanceAccount &&
-        fungibleTokens?.length === 1 &&
-        currentFungibleTokens?.onChainFTMetadata?.symbol === 'NEAR';
+const FungibleTokens = ({ fungibleTokensList }) => {
     return (
         <>
             <div className='total-balance'>
@@ -442,9 +457,10 @@ const FungibleTokens = ({
                     linkTo="/send-money"
                     trackingId="Click Send on Wallet page"
                     data-test-id="balancesTab.send"
+                    className="send"
                 >
                     <div>
-                        <SendIcon />
+                        <UpArrowIcon />
                     </div>
                     <Translate id="button.send" />
                 </FormButton>
@@ -453,6 +469,7 @@ const FungibleTokens = ({
                     linkTo="/receive-money"
                     trackingId="Click Receive on Wallet page"
                     data-test-id="balancesTab.receive"
+                    className="receive"
                 >
                     <div>
                         <DownArrowIcon />
@@ -461,51 +478,29 @@ const FungibleTokens = ({
                 </FormButton>
                 <FormButton
                     color="dark-gray"
-                    linkTo="/buy"
+                    linkTo="/dao"
                     trackingId="Click Receive on Wallet page"
-                    data-test-id="balancesTab.buy"
+                    data-test-id="balancesTab.receive"
+                    className="dao"
                 >
                     <div>
-                        <TopUpIcon />
+                        <DaoIcon />
                     </div>
-                    <Translate id="button.topUp" />
+                    DAO
                 </FormButton>
                 <FormButton
                     color="dark-gray"
-                    linkTo="/swap"
-                    trackingId="Click Swap on Wallet page"
-                    data-test-id="balancesTab.swap"
+                    linkTo="/"
+                    trackingId="Click Receive on Wallet page"
+                    data-test-id="balancesTab.receive"
+                    className="report"
                 >
                     <div>
-                        <WrapIcon color="white" />
+                        <ReportsIcon />
                     </div>
-                    <Translate id="button.swap" />
+                    Reports
                 </FormButton>
             </div>
-            {zeroBalanceAccount && (
-                <div className='deposit-banner-wrapper'>
-                    <DepositNearBanner />
-                </div>
-            )}
-            {!hideFungibleTokenSection && (
-                <>
-                    <div className="sub-title tokens">
-                        <span className={classNames({ dots: tokensLoading })}>
-                            <Translate id="wallet.yourPortfolio" />
-                        </span>
-                        {!CREATE_USN_CONTRACT && (
-                            <span>
-                                <Translate id="wallet.tokenBalance" />
-                            </span>
-                        )}
-                    </div>
-                    <Tokens
-                        tokens={fungibleTokens}
-                        currentLanguage={currentLanguage}
-                    />
-                    <div className='coingecko'><Translate id='poweredByCoinGecko' /></div>
-                </>
-            )}
         </>
     );
 };

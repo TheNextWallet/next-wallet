@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { COLORS } from '../../utils/theme';
 import classNames from '../../utils/classNames';
+import { COLORS } from '../../utils/theme';
 import ChevronIcon from '../svg/ChevronIcon';
 import UserIcon from '../svg/UserIcon';
-
 
 const Container = styled.div`
     background: #F0F0F1;
