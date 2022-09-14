@@ -14,13 +14,13 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding-top: 40px;
 
     h2 {
         color: ${COLORS.beige} !important;
+        margin-bottom: 10px;
     }
 
-    @media (min-width: 500px) {
+    @media (max-width: 500px) {
         padding: 40px 25px;
     }
 
@@ -37,6 +37,24 @@ const Container = styled.div`
                     text-align: left;
                 }
             }
+        }
+    }
+    
+    .buttons {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        
+        button {
+            width: 40%;
+
+            @media (max-width: 768px) {
+                width: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            display: block;
         }
     }
 
@@ -106,19 +124,21 @@ const VouteConfirmModal = ({ open, onClose, onConfirm, loading, label, sendingSt
                     You are about to voute for the proposal. Please confirm the details.
                 </Textfit>
                 {label && <div className='divider'><div><Translate id={label}/></div></div>}
-                <FormButton 
-                    disabled={loading}
-                    sending={loading}
-                    color='light-green'
-                    onClick={onConfirm}
-                    sendingString={`button.${vote}`}
-                    data-test-id="confirmVouteOnModalButton"
-                >
-                    <Translate id='button.confirm'/>
-                </FormButton>
-                <FormButton disabled={loading} color='dark-red' id='close-button'>
-                    <Translate id='button.cancel'/>
-                </FormButton>
+                <div className="buttons">
+                    <FormButton
+                        disabled={loading}
+                        sending={loading}
+                        color='light-green'
+                        onClick={onConfirm}
+                        sendingString={`button.${vote}`}
+                        data-test-id="confirmVouteOnModalButton"
+                    >
+                        <Translate id='button.confirm'/>
+                    </FormButton>
+                    <FormButton disabled={loading} color='dark-red' id='close-button'>
+                        <Translate id='button.cancel'/>
+                    </FormButton>
+                </div>
             </Container>
         </Modal>
     );
