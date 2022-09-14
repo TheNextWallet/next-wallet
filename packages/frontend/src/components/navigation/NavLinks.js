@@ -115,9 +115,9 @@ const NavLinks = () => (
             <AccountIcon />
             Account
         </NavLink>
-        <NavLink to='/reports' className='account-details-link' activeClassName='selected'>
+        <NavLink to='/finance/invoices' className='account-details-link' activeClassName='selected'>
             <ReportsIcon />
-            Reports
+            Finance
         </NavLink>
     </Container>
 );
