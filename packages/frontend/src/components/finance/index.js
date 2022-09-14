@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -19,13 +19,32 @@ const Styles = {
 };
 
 const Finance = ({ match }) => {
+    const [invoices, setInvoices] = useState(2);
+    const [newInvoice, setNewInvoice] = useState(false);
+
+    const onAdd = () => {
+        setInvoices((state) => state + 1);
+    };
+
     return (
         <Styles.Container>
             <FinanceNav />
             <Styles.Router>
-                <FinanceHeader />
+                <FinanceHeader
+                    onAdd={onAdd}
+                    newInvoice={newInvoice}
+                    setNewInvoice={setNewInvoice}
+                />
                 <Switch>
-                    <Route path={`${match.url}/invoices`} component={FinanceInvoices} />
+                    <Route
+                        path={`${match.url}/invoices`}
+                        render={() => (
+                            <FinanceInvoices
+                                invoices={invoices}
+                                onInvoice={() => setNewInvoice(true)}
+                            />
+                        )}
+                    />
                 </Switch>
             </Styles.Router>
         </Styles.Container>

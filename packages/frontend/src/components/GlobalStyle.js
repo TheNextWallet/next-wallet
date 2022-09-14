@@ -189,7 +189,7 @@ export default createGlobalStyle`
         height: 48px;
         border: 2px solid ${COLORS.darkGray};
         padding: 0 0 0 15px;
-        color: #24272A;
+        color: ${COLORS.lightText};
         font-weight: normal;
         position: relative;
         margin-top: 8px;

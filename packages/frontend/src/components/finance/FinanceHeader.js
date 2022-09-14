@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { COLORS } from '../../utils/theme';
+import Invoice from './invoice';
 
 const Styles = {
     Container: styled.div({
@@ -22,11 +23,18 @@ const Styles = {
     })
 };
 
-const FinanceHeader = () => {
+const FinanceHeader = ({ onAdd, newInvoice, setNewInvoice }) => {
     return (
-        <Styles.Container>
-            <Styles.New>New</Styles.New>
-        </Styles.Container>
+        <>
+            <Styles.Container>
+                <Styles.New onClick={() => setNewInvoice(true)}>New invoice</Styles.New>
+            </Styles.Container>
+            <Invoice
+                onAdd={onAdd}
+                open={newInvoice}
+                onClose={() => setNewInvoice(false)}
+            />
+        </>
     );
 };
 
