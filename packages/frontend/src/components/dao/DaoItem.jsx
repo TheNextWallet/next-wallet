@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -19,7 +19,7 @@ const Styles = {
             padding: "0 15px",
         },
     }),
-    Header: styled.div({
+    Header: styled.div(({ index }) => ({
         background: COLORS.darkGray,
         borderRadius: "30px",
         fontFamily: "'Poppins', sans-serif",
@@ -29,11 +29,12 @@ const Styles = {
         justifyContent: "space-between",
         position: "relative",
         boxShadow: "0 5px 10px black",
+        zIndex: index,
         [MEDIA_QUERY.mobile]: {
             padding: "30px 15px",
             display: "block",
         },
-    }),
+    })),
     Info: styled.div({
         display: "flex",
         [MEDIA_QUERY.mobile]: {
@@ -133,10 +134,6 @@ const Styles = {
     }),
     Body: styled.div(({ open }) => ({
         display: open ? "block" : "none",
-        padding: "20px 50px",
-        borderRadius: "30px",
-        marginTop: "-10px",
-        background: COLORS.darkGray,
     })),
 };
 
@@ -182,10 +179,17 @@ const DaoItem = (props) => {
         }
     };
 
+    const proposals = useMemo(() => {
+        if (activeProposalCount) {
+            return proposal.data.filter(({ status }) => status === 'InProgress');
+        }
+        return [];
+    }, [proposal?.data, activeProposalCount]);
+
     return (
         <div>
             <Styles.Dao>
-                <Styles.Header>
+                <Styles.Header index={proposals.length + 1}>
                     <Styles.Info>
                         <DaoLogo src={parsedMeta.flagLogo} />
                         <Styles.Identity>
@@ -226,19 +230,17 @@ const DaoItem = (props) => {
                     </Styles.Members>
                 </Styles.Header>
                 <Styles.Body open={open}>
-                    {activeProposalCount
-                        ? proposal.data
-                              .filter(({ status }) => status === "InProgress")
-                              .map((item) => (
-                                  <DaoItemProposal
-                                      key={item.id}
-                                      onClose={() => setConfirm(false)}
-                                      handleVote={handleVote}
-                                      accountId={accountId}
-                                      {...item}
-                                  />
-                              ))
-                        : null}
+                    {proposals
+                        .map((item, index) => (
+                            <DaoItemProposal
+                                key={item.id}
+                                index={proposals.length - index}
+                                onClose={() => setConfirm(false)}
+                                handleVote={handleVote}
+                                accountId={accountId}
+                                {...item}
+                            />
+                        ))}
                 </Styles.Body>
             </Styles.Dao>
             {confirm && (

@@ -10,6 +10,15 @@ import ThumbsDown from "../svg/ThumbsDown";
 import ThumbsUp from "../svg/ThumbsUp";
 
 const Styles = {
+    Proposal: styled.div(({ index }) => ({
+        padding: "20px 50px",
+        borderRadius: "30px",
+        background: COLORS.darkGray,
+        boxShadow: "0 5px 10px black",
+        marginTop: "-10px",
+        position: 'relative',
+        zIndex: index
+    })),
     Row: styled.div({
         padding: "30px 0",
         display: "flex",
@@ -31,6 +40,7 @@ const Styles = {
         width: "100%",
         textAlign: align,
         justifyContent: "space-between",
+        alignItems: 'center',
         [MEDIA_QUERY.mobile]: {
             maxWidth: "100%",
             textAlign: "center",
@@ -102,6 +112,7 @@ const DaoItemProposal = ({
     id,
     votes,
     accountId,
+    index
 }) => {
     const { approve, reject } = DAO_VOUTING_OPTIONS;
     const isVoted = !!votes[accountId];
@@ -126,7 +137,7 @@ const DaoItemProposal = ({
     );
 
     return (
-        <>
+        <Styles.Proposal index={index}>
             <Styles.Row>
                 <Styles.Cell>
                     <Styles.Title>Proposal type</Styles.Title>
@@ -190,7 +201,7 @@ const DaoItemProposal = ({
                     <OutIcon />
                 </Styles.Out>
             </Styles.Row>
-        </>
+        </Styles.Proposal>
     );
 };
 
