@@ -20,6 +20,9 @@ const Styles = {
             width: '30.72px',
             height: '30.72px',
         },
+        [MEDIA_QUERY.mobile]: {
+            display: 'none'
+        }
     }),
     Logo: styled.div({
         backgroundPosition: "50%",
@@ -30,6 +33,9 @@ const Styles = {
         border: "1px",
         borderRadius: "50%",
         marginRight: '15px',
+        [MEDIA_QUERY.mobile]: {
+            display: 'none',
+        }
     })
 }
 

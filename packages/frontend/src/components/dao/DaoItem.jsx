@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { COLORS } from '../../utils/theme';
+import { COLORS, MEDIA_QUERY } from '../../utils/theme';
 import ClickToCopy from '../common/ClickToCopy';
 import CopyIcon from '../svg/CopyIcon';
 import ExpandDownIcon from '../svg/ExpandDownIcon';
@@ -11,6 +11,9 @@ import DaoLogo from './DaoLogo';
 const Styles = {
     Dao: styled.div({
         marginBottom: '40px',
+        [MEDIA_QUERY.mobile]: {
+            padding: '0 15px'
+        }
     }),
     Header: styled.div({
         background: COLORS.darkGray,
@@ -22,9 +25,35 @@ const Styles = {
         justifyContent: 'space-between',
         position: 'relative',
         boxShadow: '0 5px 10px black',
+        [MEDIA_QUERY.mobile]: {
+            padding: '30px 15px',
+            display: 'block'
+        }
     }),
     Info: styled.div({
         display: 'flex',
+        [MEDIA_QUERY.mobile]: {
+            width: '100%'
+        }
+    }),
+    Identity: styled.div({
+        display: 'flex',
+        '& svg': {
+            width: '24px',
+            height: '24px',
+            marginLeft: '8px',
+        },
+        '& path': {
+            stroke: COLORS.lightText,
+        },
+        [MEDIA_QUERY.mobile]: {
+            background: COLORS.darkGreen,
+            borderRadius: '15px',
+            padding: '15px 10px',
+            width: '100%',
+            justifyContent: 'space-between',
+            marginBottom: '15px'
+        }
     }),
     Name: styled.div({
         fontSize: '24px',
@@ -37,14 +66,19 @@ const Styles = {
         color: COLORS.lightText,
         display: 'flex',
         alignItems: 'center',
-        '& svg': {
-            width: '24px',
-            height: '24px',
-            marginLeft: '8px',
-        },
-        '& path': {
-            stroke: COLORS.lightText,
-        },
+    }),
+    Copy: styled.div({
+        display: 'flex',
+        alignSelf: 'flex-end',
+        [MEDIA_QUERY.mobile]: {
+            alignSelf: 'center'
+        }
+    }),
+    FundsInfo: styled.div({
+        [MEDIA_QUERY.mobile]: {
+            float: 'left',
+            marginBottom: '15px',
+        }
     }),
     FundsTitle: styled.div({
         fontSize: '18px',
@@ -69,6 +103,13 @@ const Styles = {
             color: COLORS.green,
             marginRight: '5px'
         },
+        [MEDIA_QUERY.mobile]: {
+            float: 'right',
+            padding: 0,
+            background: 'none',
+            fontSize: '16px',
+            maxHeight: '16px'
+        }
     }),
     Members: styled.div({
         textAlign: 'right',
@@ -80,6 +121,10 @@ const Styles = {
             color: COLORS.lightText,
             marginBottom: '5px',
             fontWeight: 'normal',
+        },
+        [MEDIA_QUERY.mobile]: {
+            textAlign: 'left',
+            clear: 'both'
         }
     }),
     Body: styled.div(({ open }) => ({
@@ -111,24 +156,26 @@ const DaoItem = (props) => {
             <Styles.Header>
                 <Styles.Info>
                     <DaoLogo src={parsedMeta.flagLogo} />
-                    <div>
-                        <Styles.Name>{name}</Styles.Name>
-                        <Styles.Id>
-                            {id}
+                    <Styles.Identity>
+                        <div>
+                            <Styles.Name>{name}</Styles.Name>
+                            <Styles.Id>{id}</Styles.Id>
+                        </div>
+                        <Styles.Copy>
                             <ClickToCopy copy={id}>
                                 <CopyIcon/>
                             </ClickToCopy>
-                        </Styles.Id>
-                    </div>
+                        </Styles.Copy>
+                    </Styles.Identity>
                 </Styles.Info>
-                <div>
+                <Styles.FundsInfo>
                     <Styles.FundsTitle>
                         DAO funds
                     </Styles.FundsTitle>
                     <Styles.Funds>
                         {totalDaoFunds.toFixed(2)} USD
                     </Styles.Funds>
-                </div>
+                </Styles.FundsInfo>
                 <Styles.Proposals onClick={activeProposalCount ? handleOpen : null}>
                     <span>{activeProposalCount}</span> active proposals
                     {activeProposalCount ? (

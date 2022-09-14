@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import getDistance from '../../utils/getDistance';
-import { COLORS } from '../../utils/theme';
+import { COLORS, MEDIA_QUERY } from '../../utils/theme';
 import { formatNearAmount } from '../common/balance/helpers';
 import OutIcon from '../svg/OutIcon';
 import ThumbsDown from '../svg/ThumbsDown';
@@ -17,6 +17,9 @@ const Styles = {
         borderBottom: '1px solid rgba(165,165,165,0.5)',
         '&:last-child': {
             borderBottom: 0
+        },
+        [MEDIA_QUERY.mobile]: {
+            flexDirection: 'column'
         }
     }),
     Cell: styled.div(({ align, display, padding }) => ({
@@ -25,7 +28,15 @@ const Styles = {
         maxWidth: `${100 / 3}%`,
         width: '100%',
         textAlign: align,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        [MEDIA_QUERY.mobile]: {
+            maxWidth: '100%',
+            textAlign: 'center',
+            marginBottom: '15px',
+            '&:last-child': {
+                marginBottom: 0
+            }
+        }
     })),
     Title: styled.div({
         fontSize: '18px',
@@ -51,7 +62,11 @@ const Styles = {
         maxWidth: '90%',
         width: '100%',
         fontSize: '24px',
-        color: COLORS.beige
+        color: COLORS.beige,
+        [MEDIA_QUERY.mobile]: {
+            maxWidth: '100%',
+            wordBreak: 'break-word'
+        }
     }),
     Out: styled.div({
         alignSelf: 'flex-start',
