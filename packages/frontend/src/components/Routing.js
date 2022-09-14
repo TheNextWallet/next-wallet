@@ -71,6 +71,7 @@ import PrivateRoute from './common/routing/PrivateRoute';
 import PublicRoute from './common/routing/PublicRoute';
 import Route from './common/routing/Route';
 import { Dao } from './Dao';
+import Finance from './finance';
 import GlobalStyle from './GlobalStyle';
 import { LoginCliLoginSuccess } from './login/LoginCliLoginSuccess';
 import NavigationWrapper from './navigation/NavigationWrapper';
@@ -341,6 +342,7 @@ class Routing extends Component {
                         />
                         <LedgerConfirmActionModal />
                         <LedgerConnectModal />
+
                         {account.requestPending !== null && (
                             <TwoFactorVerifyModal
                                 onClose={(verified, error) => {
@@ -615,6 +617,10 @@ class Routing extends Component {
                                 exact
                                 path="/dao"
                                 component={Dao}
+                            />
+                            <PrivateRoute
+                                path="/finance"
+                                component={Finance}
                             />
                             <PrivateRoute
                                 exact
