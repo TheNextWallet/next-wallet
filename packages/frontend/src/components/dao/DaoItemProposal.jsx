@@ -72,9 +72,10 @@ const Styles = {
         background: positive ? COLORS.darkGreen : COLORS.darkRed,
         cursor: isVoted ? "default" : "pointer",
         opacity: isVoted ? 0.5 : 1,
-        border: isVoted && positive && vote === "Approve"
-            ? `3px solid ${COLORS.green}`
-            : !positive && vote === "Reject"
+        border:
+            isVoted && positive && vote === "Approve"
+                ? `3px solid ${COLORS.green}`
+                : !positive && vote === "Reject"
                 ? `3px solid ${COLORS.lightRed}`
                 : "none",
     })),
@@ -154,10 +155,16 @@ const DaoItemProposal = ({
             </Styles.Row>
             <Styles.Row>
                 <Styles.Cell>
-                    <Styles.Title>Amount</Styles.Title>
-                    <Styles.Value>
-                        {formatNearAmount(kind?.amount)} NEAR
-                    </Styles.Value>
+                    {kind?.amount ? (
+                        <div>
+                            <Styles.Title>Amount</Styles.Title>
+                            <Styles.Value>
+                                {formatNearAmount(kind.amount)} NEAR
+                            </Styles.Value>
+                        </div>
+                    ) : (
+                        <div></div>
+                    )}
                 </Styles.Cell>
                 <Styles.Cell display="flex" padding="0 5%" alignItems="center">
                     <Styles.Vote
