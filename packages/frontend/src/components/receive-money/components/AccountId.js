@@ -1,7 +1,6 @@
 import React from 'react';
 import { Translate } from 'react-localize-redux';
 import styled from 'styled-components';
-import { COLORS } from '../../../utils/theme';
 
 import { COLORS } from '../../../utils/theme';
 import ClickToCopy from '../../common/ClickToCopy';

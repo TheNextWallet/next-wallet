@@ -60,8 +60,8 @@ const Styles = {
     }),
 };
 
-export const Dao = () => {
-    const {data} = useDao();
+const Dao = () => {
+    const { data } = useDao();
 
     return data !== null ? data.length ? (
         <Styles.Container>
@@ -81,3 +81,5 @@ export const Dao = () => {
         </Styles.NotFound>
     ) : null;
 };
+
+export default Dao;

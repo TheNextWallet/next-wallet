@@ -70,7 +70,7 @@ import MigrationBanner from './common/MigrationBanner';
 import PrivateRoute from './common/routing/PrivateRoute';
 import PublicRoute from './common/routing/PublicRoute';
 import Route from './common/routing/Route';
-import { Dao } from './Dao';
+import Dao from './dao';
 import GlobalStyle from './GlobalStyle';
 import { LoginCliLoginSuccess } from './login/LoginCliLoginSuccess';
 import NavigationWrapper from './navigation/NavigationWrapper';
