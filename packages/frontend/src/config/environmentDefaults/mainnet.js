@@ -50,6 +50,7 @@ export default {
     SHOW_PRERELEASE_WARNING: false,
     SMS_BLACKLIST: ['CN', 'VN', 'TH'],
     STAKING_GAS_BASE: '25000000000000', // 25 Tgas
+    VOTING_GAS_BASE: '15000000000000', // 15 Tgas
     WHITELISTED_CONTRACTS: [
         'berryclub.ek.near',
         'wrap.near',

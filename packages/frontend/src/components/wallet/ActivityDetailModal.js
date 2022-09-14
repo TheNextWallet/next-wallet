@@ -105,6 +105,7 @@ const StyledContainer = styled.div`
 
                 &.transferred {
                     .near-amount {
+                        color: ${COLORS.red} !important;
                         &::before {
                             content: '-'
                         }

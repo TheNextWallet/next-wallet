@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { COLORS } from '../../../utils/theme';
 
 import CopyIcon from '../../svg/CopyIcon';
 
 const Container = styled.div`
     display: flex;
     align-items: center;
-    background-color: #F0F0F0;
+    background-color: ${COLORS.darkGreen};
     padding: 4px 4px 4px 15px;
     border-radius: 40px;
     font-weight: 600;
@@ -14,7 +15,7 @@ const Container = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
+    color: ${COLORS.green};
     span {
         max-width: 200px;
         overflow: hidden;
@@ -22,7 +23,7 @@ const Container = styled.div`
     }
 
     > div {
-        background-color: white;
+        background-color: ${COLORS.darkGray};
         min-height: 32px;
         min-width: 32px;
         height: 32px;
@@ -40,7 +41,7 @@ const AccountId = ({ id,  'data-test-id': testId }) => {
         <Container data-test-id={testId}> 
             <span>{id}</span>
             <div>
-                <CopyIcon/>
+                <CopyIcon color={COLORS.green}/>
             </div>
         </Container>
     );

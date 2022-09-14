@@ -7,9 +7,10 @@ export const COLORS = {
 
     green: '#05DF85',
     darkGreen: '#293933',
-    
+
     red: '#C34323',
     lightRed: '#FF7294',
+    darkRed: "#3E2B2F"
 };
 
 export const BACKGROUND = {

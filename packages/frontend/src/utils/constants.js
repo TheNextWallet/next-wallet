@@ -67,3 +67,9 @@ export const getValidationNetworkPrefixes = (networkId) => {
         }
     }
 };
+
+
+export const DAO_VOTING_OPTIONS = {
+    approve: "VoteApprove",
+    reject: "VoteReject"
+}

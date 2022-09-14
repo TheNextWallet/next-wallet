@@ -5,12 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { MULTISIG_MIN_AMOUNT, ALLOW_2FA_ENABLE_HASHES } from '../../../config';
+import { MULTISIG_MIN_AMOUNT } from '../../../config';
 import { disableMultisig } from '../../../redux/actions/account';
 import { selectAccountSlice } from '../../../redux/slices/account';
 import { actions as recoveryMethodsActions } from '../../../redux/slices/recoveryMethods';
 import { selectActionsPending } from '../../../redux/slices/status';
 import { selectNearTokenFiatValueUSD } from '../../../redux/slices/tokenFiatValues';
+import { COLORS } from '../../../utils/theme';
 import { getNearAndFiatValue } from '../../common/balance/helpers';
 import FormButton from '../../common/FormButton';
 import Card from '../../common/styled/Card.css';
@@ -25,11 +26,10 @@ const {
 
 const Container = styled(Card)`
     margin-top: 30px;
-
-    .title {
-        color: #24272a;
-        font-weight: 500;
-    }
+    border: unset;
+    background: ${COLORS.darkGray};
+    border-radius: 30px;
+    padding: 28px 36px;
 
     .detail {
         color: #A1A1A9;
@@ -42,13 +42,24 @@ const Container = styled(Card)`
             justify-content: space-between;
 
             button {
-                height: 36px;
-                width: 100px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                padding: 0;
-                margin: 0;
+                width: 176px;
+                height: 40px;                
+                background: ${COLORS.darkGreen} !important;
+                border-radius: 15px;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 103.4%;
+                color: ${COLORS.green};
+                font-family: 'Poppins', sans-serif;
+                border: unset;
+                margin: 0px;
+
+            }
+            button:disabled {
+                color: ${COLORS.green} !important;
             }
         }
 
@@ -62,12 +73,23 @@ const Container = styled(Card)`
         }
 
     }
+
+    @media (max-width: 767px) {
+    .method {
+        .top {
+            button {
+                width: unset;
+                height: unset;
+                padding: 16px 32px;
+            }
+        }      
+    }
 `;
 
 const TwoFactorAuth = ({ twoFactor, history }) => {
     const [confirmDisable, setConfirmDisable] = useState(false);
     const account = useSelector(selectAccountSlice);
-    const existingContract = !ALLOW_2FA_ENABLE_HASHES.includes(account?.code_hash);
+    // const existingContract = !ALLOW_2FA_ENABLE_HASHES.includes(account?.code_hash);
     const nearTokenFiatValueUSD = useSelector(selectNearTokenFiatValueUSD);
     const dispatch = useDispatch();
     const confirmDisabling = useSelector((state) => selectActionsPending(state, { types: ['DISABLE_MULTISIG'] }));
@@ -115,7 +137,7 @@ const TwoFactorAuth = ({ twoFactor, history }) => {
                         <FormButton
                             onClick={() => history.push('/enable-two-factor')}
                             trackingId="2FA Click enable button"
-                            disabled={!account.canEnableTwoFactor || existingContract}
+                            disabled={true}
                         >
                             <Translate id='button.enable'/>
                         </FormButton>

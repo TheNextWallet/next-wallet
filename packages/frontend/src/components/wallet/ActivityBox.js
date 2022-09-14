@@ -87,7 +87,15 @@ const StyledContainer = styled.div`
             color: ${COLORS.beige};
 
             &.transferred {
+                .balance {
+                    .near-amount {
+                        .near {
+                            color: ${COLORS.lightRed};
+                        }
+                    }
+                }
                 &::before {
+                    color: ${COLORS.lightRed};
                     content: '-'
                 }
             }

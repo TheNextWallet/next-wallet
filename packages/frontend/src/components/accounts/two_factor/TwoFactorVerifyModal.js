@@ -8,6 +8,7 @@ import { resendTwoFactor, get2faMethod, getMultisigRequest } from '../../../redu
 import { selectAccountSlice, selectAccountMultisigRequest } from '../../../redux/slices/account';
 import { selectActionsPending, selectStatusSlice } from '../../../redux/slices/status';
 import getTranslationsFromMultisigRequest from '../../../utils/getTranslationsFromMultisigRequest';
+import { COLORS } from '../../../utils/theme';
 import { WalletError } from '../../../utils/walletError';
 import AlertBanner from '../../common/AlertBanner';
 import FormButton from '../../common/FormButton';
@@ -42,6 +43,10 @@ const StyledBannerContainer = styled.div`
 
         pre {
             margin: 0px;
+        }
+
+        .title {
+            color: ${COLORS.beige},
         }
     }
 `;
