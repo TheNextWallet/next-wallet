@@ -32,9 +32,10 @@ const Styles = {
             flexDirection: "column",
         },
     }),
-    Cell: styled.div(({ align, display, padding }) => ({
+    Cell: styled.div(({ align, display, padding, alignItems }) => ({
         display,
         padding,
+        alignItems,
         maxWidth: `${100 / 3}%`,
         width: "100%",
         textAlign: align,
@@ -160,7 +161,7 @@ const DaoItemProposal = ({
                         {formatNearAmount(kind?.amount)} NEAR
                     </Styles.Value>
                 </Styles.Cell>
-                <Styles.Cell display="flex" padding="0 5%">
+                <Styles.Cell display="flex" padding="0 5%" alignItems="center">
                     <Styles.Vote
                         onClick={() =>
                             !isVoted &&
@@ -172,6 +173,7 @@ const DaoItemProposal = ({
                         <ThumbsUp />
                     </Styles.Vote>
                     <Styles.VoteAmount>{parsedVotes.approve}</Styles.VoteAmount>
+
                     <Styles.Vote
                         onClick={() =>
                             !isVoted &&
