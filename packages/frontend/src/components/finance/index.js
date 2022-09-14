@@ -11,7 +11,7 @@ const Styles = {
         display: 'flex',
         maxWidth: '1440px',
         margin: '30px auto',
-        padding: '0 30px',
+        padding: '0 80px',
     }),
     Router: styled.div({
         width: '100%'
