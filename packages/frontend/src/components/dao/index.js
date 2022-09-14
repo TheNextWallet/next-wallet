@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { COLORS, MEDIA_QUERY } from '../../utils/theme';
@@ -61,12 +61,14 @@ const Styles = {
 };
 
 const Dao = () => {
-    const { data } = useDao();
+    const [fetched, setFetched] = useState(0);
+    const refetch = () => setFetched(fetched + 1);
+    const { data } = useDao(fetched);
 
     return data !== null ? data.length ? (
         <Styles.Container>
             {data.map((item) => (
-                <DaoItem key={item.id} {...item} />
+                <DaoItem key={item.id} {...item} refetch={refetch} />
             ))}
         </Styles.Container>
     ) : (

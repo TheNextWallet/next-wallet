@@ -147,6 +147,7 @@ const DaoItem = (props) => {
         numberOfMembers,
         proposal,
         parsedMeta,
+        refetch,
     } = props;
 
     const dispatch = useDispatch();
@@ -173,15 +174,22 @@ const DaoItem = (props) => {
         setLoading(true);
         try {
             await dispatch(handleVotingAction(votingParams));
-            setConfirm(false);
+            setTimeout(() => {
+                refetch();
+            }, 4000);
         } finally {
-            setLoading(false);
+            setTimeout(() => {
+                setConfirm(false);
+                setLoading(false);
+            }, 10000);
         }
     };
 
     const proposals = useMemo(() => {
         if (activeProposalCount) {
-            return proposal.data.filter(({ status }) => status === 'InProgress');
+            return proposal.data.filter(
+                ({ status }) => status === "InProgress"
+            );
         }
         return [];
     }, [proposal?.data, activeProposalCount]);
@@ -230,16 +238,15 @@ const DaoItem = (props) => {
                     </Styles.Members>
                 </Styles.Header>
                 <Styles.Body open={open}>
-                    {proposals
-                        .map((item, index) => (
-                            <DaoItemProposal
-                                key={item.id}
-                                index={proposals.length - index}
-                                handleVote={handleVote}
-                                accountId={accountId}
-                                {...item}
-                            />
-                        ))}
+                    {proposals.map((item, index) => (
+                        <DaoItemProposal
+                            key={item.id}
+                            index={proposals.length - index}
+                            handleVote={handleVote}
+                            accountId={accountId}
+                            {...item}
+                        />
+                    ))}
                 </Styles.Body>
             </Styles.Dao>
             {confirm && (

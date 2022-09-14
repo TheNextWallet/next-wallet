@@ -22,9 +22,7 @@ const fetchData = (url) => {
 };
 
 const parseDaoMetadata = (metadata) => {
-    if (!metadata) {
-        return {};
-    }
+    if (!metadata) return {};
 
     const fromBase64ToObj = (str) => JSON.parse(Buffer.from(str, 'base64').toString('utf-8'));
     const toAstroDaoImageUrl = (id) => id && `https://sputnik-dao.s3.eu-central-1.amazonaws.com/${id}`;
@@ -36,12 +34,12 @@ const parseDaoMetadata = (metadata) => {
     };
 };
 
-export const useDao = () => {
+export const useDao = (fetched = 0) => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
     const accountId = useSelector(selectAccountId);
 
-    const getData = useCallback(async (accountId) => {
+    const getData = useCallback(async (accountId, fetched) => {
         setLoading(true);
 
         const dao = await fetchData(`${accountDaosUrl}${accountId}`);
@@ -52,6 +50,7 @@ export const useDao = () => {
             ...item,
             proposal: data[index],
             parsedMeta: parseDaoMetadata(item.config.metadata),
+            fetched: fetched + 1
         })));
 
         setLoading(false);
@@ -60,9 +59,9 @@ export const useDao = () => {
 
     useEffect(() => {
         if (accountId) {
-            getData(accountId);
+            getData(accountId, fetched);
         }
-    }, [getData, accountId]);
+    }, [getData, accountId, fetched]);
 
     return { loading, data };
 };
