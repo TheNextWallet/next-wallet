@@ -7,7 +7,7 @@ import Balance from '../common/balance/Balance';
 import Modal from '../common/modal/Modal';
 import FormButton from '../common/FormButton';
 import { COLORS } from '../../utils/theme';
-import { DAO_VOUTING_OPTIONS } from '../../utils/constants';
+import { DAO_VOTING_OPTIONS } from '../../utils/constants';
 
 const Container = styled.div`
     display: flex;
@@ -63,7 +63,7 @@ const Container = styled.div`
         max-width: 400px;
     }
 
-    .voute-amount {
+    .vote-amount {
         color: #24272a;
         font-weight: 500;
         margin: 40px 0 !important;
@@ -109,11 +109,11 @@ const Container = styled.div`
 
 `;
 
-const VouteConfirmModal = ({ open, onClose, onConfirm, loading, label, sendingString, vote }) => {
-    const voteText = vote === DAO_VOUTING_OPTIONS.approve ? 'Approving' : 'Rejecting';
+const VoteConfirmModal = ({ open, onClose, onConfirm, loading, label, sendingString, vote }) => {
+    const voteText = vote === DAO_VOTING_OPTIONS.approve ? 'Approving' : 'Rejecting';
     return (
         <Modal
-            id='vouting-confirm-modal'
+            id='voting-confirm-modal'
             isOpen={open}
             onClose={onClose}
             closeButton='desktop'
@@ -121,7 +121,7 @@ const VouteConfirmModal = ({ open, onClose, onConfirm, loading, label, sendingSt
             <Container>
                 <h2>{voteText} proposal</h2>
                 <Textfit mode='single' max={40}>
-                    You are about to voute for the proposal. Please confirm the details.
+                    You are about to vote for the proposal. Please confirm the details.
                 </Textfit>
                 {label && <div className='divider'><div><Translate id={label}/></div></div>}
                 <div className="buttons">
@@ -131,7 +131,7 @@ const VouteConfirmModal = ({ open, onClose, onConfirm, loading, label, sendingSt
                         color='light-green'
                         onClick={onConfirm}
                         sendingString={`button.${vote}`}
-                        data-test-id="confirmVouteOnModalButton"
+                        data-test-id="confirmVoteOnModalButton"
                     >
                         <Translate id='button.confirm'/>
                     </FormButton>
@@ -144,4 +144,4 @@ const VouteConfirmModal = ({ open, onClose, onConfirm, loading, label, sendingSt
     );
 };
 
-export default VouteConfirmModal;
+export default VoteConfirmModal;

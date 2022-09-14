@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { handleVoutingAction } from "../../redux/actions/vouting";
+import { handleVotingAction } from "../../redux/actions/voting";
 import { selectAccountId } from "../../redux/slices/account";
 import { COLORS, MEDIA_QUERY } from "../../utils/theme";
 import ClickToCopy from "../common/ClickToCopy";
@@ -10,7 +10,7 @@ import CopyIcon from "../svg/CopyIcon";
 import ExpandDownIcon from "../svg/ExpandDownIcon";
 import DaoItemProposal from "./DaoItemProposal";
 import DaoLogo from "./DaoLogo";
-import VouteConfirmModal from "./VouteConfirmModal";
+import VoteConfirmModal from "./VoteConfirmModal";
 
 const Styles = {
     Dao: styled.div({
@@ -154,7 +154,7 @@ const DaoItem = (props) => {
     const [open, setOpen] = useState(false);
     const [confirm, setConfirm] = useState();
     const [loading, setLoading] = useState();
-    const [voutingParams, setVoutingParams] = useState({
+    const [votingParams, setVotingParams] = useState({
         daoId: "",
         proposalId: "",
         vote: "",
@@ -165,14 +165,14 @@ const DaoItem = (props) => {
     const accountId = useSelector(selectAccountId);
 
     const handleVote = async ({ daoId, proposalId, vote, amount }) => {
-        setVoutingParams({ daoId, proposalId, vote, amount });
+        setVotingParams({ daoId, proposalId, vote, amount });
         setConfirm(true);
     };
 
-    const onVoutingAction = async () => {
+    const onVotingAction = async () => {
         setLoading(true);
         try {
-            await dispatch(handleVoutingAction(voutingParams));
+            await dispatch(handleVotingAction(votingParams));
             setConfirm(false);
         } finally {
             setLoading(false);
@@ -235,7 +235,6 @@ const DaoItem = (props) => {
                             <DaoItemProposal
                                 key={item.id}
                                 index={proposals.length - index}
-                                onClose={() => setConfirm(false)}
                                 handleVote={handleVote}
                                 accountId={accountId}
                                 {...item}
@@ -244,14 +243,14 @@ const DaoItem = (props) => {
                 </Styles.Body>
             </Styles.Dao>
             {confirm && (
-                <VouteConfirmModal
+                <VoteConfirmModal
                     open={confirm}
-                    onConfirm={onVoutingAction}
+                    onConfirm={onVotingAction}
                     onClose={() => {
                         setConfirm(false);
                     }}
                     loading={loading}
-                    {...voutingParams}
+                    {...votingParams}
                 />
             )}
         </div>

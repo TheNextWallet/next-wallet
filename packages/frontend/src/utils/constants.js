@@ -69,7 +69,7 @@ export const getValidationNetworkPrefixes = (networkId) => {
 };
 
 
-export const DAO_VOUTING_OPTIONS = {
+export const DAO_VOTING_OPTIONS = {
     approve: "VoteApprove",
     reject: "VoteReject"
 }

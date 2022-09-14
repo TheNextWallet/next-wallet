@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { DAO_VOUTING_OPTIONS } from "../../utils/constants";
+import { redirectTo } from "../../redux/actions/account";
+import { DAO_VOTING_OPTIONS } from "../../utils/constants";
 
 import getDistance from "../../utils/getDistance";
 import { COLORS, MEDIA_QUERY } from "../../utils/theme";
@@ -16,8 +17,8 @@ const Styles = {
         background: COLORS.darkGray,
         boxShadow: "0 5px 10px black",
         marginTop: "-10px",
-        position: 'relative',
-        zIndex: index
+        position: "relative",
+        zIndex: index,
     })),
     Row: styled.div({
         padding: "30px 0",
@@ -40,7 +41,7 @@ const Styles = {
         width: "100%",
         textAlign: align,
         justifyContent: "space-between",
-        alignItems: 'center',
+        alignItems: "center",
         [MEDIA_QUERY.mobile]: {
             maxWidth: "100%",
             textAlign: "center",
@@ -60,25 +61,23 @@ const Styles = {
         fontWeight: "bold",
         color,
     })),
-    Vote: styled.div(({ positive = true, isVoted = false, vote }) => {
-        return ({
-            width: "64px",
-            height: "64px",
-            borderRadius: "50%",
-            overflow: "hidden",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: positive ? COLORS.darkGreen : COLORS.darkRed,
-            cursor: isVoted ? "default" : "pointer",
-            opacity: isVoted ? 0.5 : 1,
-            border: isVoted && positive && vote === "Approve"
-                ? `3px solid ${COLORS.darkGreen}`
-                : !positive && vote === "Reject"
-                    ? `3px solid ${COLORS.darkRed}`
-                    : "none",
-        });
-    }),
+    Vote: styled.div(({ positive = true, isVoted = false, vote }) => ({
+        width: "64px",
+        height: "64px",
+        borderRadius: "50%",
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: positive ? COLORS.darkGreen : COLORS.darkRed,
+        cursor: isVoted ? "default" : "pointer",
+        opacity: isVoted ? 0.5 : 1,
+        border: isVoted && positive && vote === "Approve"
+            ? `3px solid ${COLORS.green}`
+            : !positive && vote === "Reject"
+                ? `3px solid ${COLORS.lightRed}`
+                : "none",
+    })),
     Description: styled.div({
         maxWidth: "90%",
         width: "100%",
@@ -89,7 +88,7 @@ const Styles = {
             wordBreak: "break-word",
         },
     }),
-    Out: styled.div({
+    Out: styled.a({
         alignSelf: "flex-start",
         marginTop: "15px",
     }),
@@ -107,14 +106,13 @@ const DaoItemProposal = ({
     votePeriodEnd,
     kind,
     handleVote,
-    onClose,
     daoId,
     id,
     votes,
     accountId,
-    index
+    index,
 }) => {
-    const { approve, reject } = DAO_VOUTING_OPTIONS;
+    const { approve, reject } = DAO_VOTING_OPTIONS;
     const isVoted = !!votes[accountId];
 
     const voteParams = {
@@ -197,7 +195,9 @@ const DaoItemProposal = ({
                     <Styles.Title>Description</Styles.Title>
                     {description.split("$$$$")[0]}
                 </Styles.Description>
-                <Styles.Out onClick={onClose}>
+                <Styles.Out
+                    href={`https://testnet.app.astrodao.com/dao/${daoId}/proposals/${id}`}
+                >
                     <OutIcon />
                 </Styles.Out>
             </Styles.Row>
