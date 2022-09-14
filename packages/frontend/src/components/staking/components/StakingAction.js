@@ -65,7 +65,6 @@ export default function StakingAction({
     const handleSubmitStake = async () => {
         try {
             setCheckingValidator(true);
-
             if (await validatorHasFAK(match.params.validator)) {
                 setValidatorMightHaveFAK(true);
                 dispatch(showCustomAlert({
@@ -212,7 +211,7 @@ export default function StakingAction({
                         clickable={false}
                         amount={validator.staked}
                     />
-                )}
+                )} //HERE
                 <FormButton
                     sending={checkingValidator}
                     sendingString='staking.staking.checkingValidator'

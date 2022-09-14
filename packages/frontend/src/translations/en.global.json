@@ -340,7 +340,9 @@
         "viewFAQ": "View FAQ",
         "viewOnExplorer": "View on Explorer",
         "viewPrivateKey": "View private key",
-        "withdrawing": "Withdrawing"
+        "withdrawing": "Withdrawing",
+        "VoteApprove": "Approve",
+        "VoteReject": "Reject"
     },
     "buyNear": {
         "bridgeSubTitle": "Transfer your tokens from Ethereum to NEAR using the Rainbow Bridge.",

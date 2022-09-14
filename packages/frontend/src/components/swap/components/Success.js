@@ -55,7 +55,7 @@ const Success = ({ amountFrom, amountTo, transactionHash, onClickContinue, onCli
                 />
             </div>
             <div className="buttons-bottom-buttons">
-                <FormButton onClick={onClickContinue}>
+                <FormButton onClick={onClickContinue} color='dark-green'>
                     <Translate id="button.continue" />
                 </FormButton>
                 {transactionHash && (

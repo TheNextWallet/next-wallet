@@ -1,14 +1,15 @@
 import styled from 'styled-components';
+import { COLORS } from '../../../../../utils/theme';
 
 const Style = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px 15px;
-    color: #72727A;
+    color: ${COLORS.beige} !important;
 
     &.information {
-        color: #272729;
+        color: ${COLORS.beige} !important;
         font-weight: 600;
 
         > div {
@@ -26,7 +27,7 @@ const Style = styled.div`
     }
 
     .icon, .amount {
-        color: #272729;
+        color: ${COLORS.beige};
         font-weight: 600;
         font-size: 16px;
         text-align: right;
