@@ -1,13 +1,15 @@
 import React from 'react';
 import { Translate } from 'react-localize-redux';
 import styled from 'styled-components';
+import { COLORS } from '../../../utils/theme';
 
+import { COLORS } from '../../../utils/theme';
 import ClickToCopy from '../../common/ClickToCopy';
 import CopyIcon from '../../svg/CopyIcon';
 
 const StyledContainer = styled.div`
-    background-color: #FAFAFA;
-    color: #72727A;
+    background-color: ${COLORS.black};
+    color: ${COLORS.beige};
     padding: 15px;
     border-radius: 8px;
 
@@ -20,23 +22,23 @@ const StyledContainer = styled.div`
             display: flex;
             align-items: center;
             font-size: 12px;
-            color: #0072CE;
+            color: ${COLORS.lightText};
 
             svg {
                 margin-right: 4px;
                 width: 16px;
 
                 path {
-                    stroke: #0072CE;
+                    stroke: ${COLORS.lightText};
                 }
             }
         }
     }
 
     .bottom {
-        color: black;
+        background-color: ${COLORS.darkGray};
+        color: ${COLORS.lightText};
         font-weight: 600;
-        background-color: #F0F0F1;
         border-radius: 8px;
         padding: 15px;
         font-size: 16px;
@@ -45,24 +47,19 @@ const StyledContainer = styled.div`
     }
 `;
 
-const AccountId = ({ accountId }) => {
-    return (
-        <StyledContainer>
-            <div className='top'>
-                <div><Translate id='input.accountId.title' /></div>
-                <ClickToCopy
-                    copy={accountId}
-                    className='copy-account-id'
-                >
-                    <CopyIcon/>
-                    <Translate id='copy.title' />
-                </ClickToCopy>
-            </div>
-            <div className='bottom'>
-                {accountId}
-            </div>
-        </StyledContainer>
-    );
-};
+const AccountId = ({ accountId }) => (
+    <StyledContainer>
+        <div className='top'>
+            <div><Translate id='input.accountId.title' /></div>
+            <ClickToCopy copy={accountId} className='copy-account-id'>
+                <CopyIcon/>
+                <Translate id='copy.title' />
+            </ClickToCopy>
+        </div>
+        <div className='bottom'>
+            {accountId}
+        </div>
+    </StyledContainer>
+);
 
 export default AccountId;

@@ -2,6 +2,7 @@ import React from 'react';
 import { Translate } from 'react-localize-redux';
 import styled from 'styled-components';
 
+import { COLORS } from '../../utils/theme';
 import FormButton from '../common/FormButton';
 import NearCircleIcon from '../svg/NearCircleIcon.js';
 import NFTBox from './NFTBox';
@@ -10,12 +11,10 @@ const StyledContainer = styled.div`
     &&& {
         width: 100%;
 
-        @media (max-width: 991px) {
-            margin-bottom: 50px;
-        }
-
         .nft-box {
-            border-top: 1px solid #F0F0F1;
+            background-color: ${COLORS.darkGray};
+            margin-top: 15px;
+            border-radius: 30px;
 
             :first-of-type {
                 border-top: none;
@@ -28,7 +27,7 @@ const StyledContainer = styled.div`
             flex-direction: column;
             text-align: center;
             padding: 50px 20px;
-            background-color: #F8F8F8;
+            background-color: ${COLORS.darkGray};
             border-radius: 8px;
 
             @media (max-width: 991px) {
@@ -50,8 +49,6 @@ const StyledContainer = styled.div`
             button {
                 width: 100%;
                 margin: 25px auto 0 auto;
-                border-color: #EFEFEF;
-                background: #EFEFEF;
             }
         }
     }
@@ -71,13 +68,12 @@ const NFTs = ({ tokens }) => {
             </StyledContainer>
         );
     }
-    
     return (
         <StyledContainer>
             <div className='empty-state'>
-                <NearCircleIcon/>
+                <NearCircleIcon color={COLORS.green}/>
                 <div><Translate id='NFTs.emptyState' /></div>
-                <FormButton color='gray-blue' linkTo='https://awesomenear.com/categories/nft/'>
+                <FormButton color='dark-green' linkTo='https://awesomenear.com/categories/nft/'>
                     <Translate id='exploreApps.exploreApps' />
                 </FormButton>
             </div>

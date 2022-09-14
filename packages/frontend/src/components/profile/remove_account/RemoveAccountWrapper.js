@@ -3,12 +3,13 @@ import { Translate } from 'react-localize-redux';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import RemoveAccountImage from '../../../images/icon-trash.js';
 import { switchAccount } from '../../../redux/actions/account';
 import { selectAccountId } from '../../../redux/slices/account';
+import { COLORS } from '../../../utils/theme';
 import { wallet } from '../../../utils/wallet';
 import FormButton from '../../common/FormButton';
 import Container from '../../common/styled/Container.css';
+import RemoveIcon from '../../svg/RemoveIcon';
 import RemoveAccountModal from './RemoveAccountModal';
 
 const StyledContainer = styled(Container)`
@@ -23,11 +24,21 @@ const StyledContainer = styled(Container)`
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 515px;
+            height: 74px;
+        
+            background: #3E2B2F;
+            border-radius: 15px;
+            border: 0px;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 103.4%;
+            font-family: 'Poppins', sans-serif;
 
             svg {
-                width: 22px;
-                height: 22px;
-                margin-right: 10px;
+                width: 28px;
+                height: 28px;
+                margin: 0px 10px 0px 0px;
             } 
 
             :hover {
@@ -38,7 +49,21 @@ const StyledContainer = styled(Container)`
                 }
             }
         }
-    }   
+    }
+    @media (max-width: 991px) {
+        &&& {
+            padding: 0px;
+            > button {
+                width: 100%;
+                font-size: 16px !important;
+
+                svg {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+        }
+    }
 `;
 
 export default () => {
@@ -48,11 +73,11 @@ export default () => {
     return (
         <StyledContainer>
             <FormButton 
-                color='red'
+                color='dark-red'
                 onClick={() => setShowRemoveAccountModal(true)}
                 style={{marginTop: 0}}
             >
-                <RemoveAccountImage className='remove-account-icon' />
+                <RemoveIcon className='remove-account-icon' color={COLORS.lightRed} />
                 <Translate id='removeAccount.button' />
             </FormButton>
             {showRemoveAccountModal && (

@@ -10,7 +10,7 @@ export const COLORS = {
 
     red: '#C34323',
     lightRed: '#FF7294',
-    darkRed: '#3E2B2F',
+    darkRed: "#3E2B2F"
 };
 
 export const BACKGROUND = {

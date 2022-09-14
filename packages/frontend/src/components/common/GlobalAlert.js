@@ -29,8 +29,8 @@ const AlertContainer = styled.div`
     }
 
     @media (max-width: 991px) {
-        left: 0px;
-        right: 0px;
+        left: 0;
+        right: 0;
         margin-top: -15px;
     }
 
@@ -67,11 +67,10 @@ const AlertContainer = styled.div`
     }
 `;
 
-
 const Alert = styled.div`
     background-color: #fff;
     border-left: 4px solid;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
     border-color: ${(props) => props.success ? '#02ba86' : '#e41d22'};
     margin-bottom: 12px;
 
@@ -127,6 +126,7 @@ const Text = styled.div`
     flex: 1 1 auto;
     padding-top: 4px;
 `;
+
 const Close = styled.div`
     width: 12px;
     height: 12px;
@@ -159,6 +159,7 @@ const Close = styled.div`
         }
     }
 `;
+
 const Header = styled.div`
     font-weight: 600;
     margin-bottom: 8px;
@@ -176,7 +177,6 @@ const Console = styled.div`
 `;
 
 const GlobalAlertNew = ({ globalAlert, actionStatus, clearGlobalAlert, closeIcon = true }) => {
-
     const [closing, setClosing] = useState(false);
     const [alerts, setAlerts] = useState([]);
     const zendeskBaseURL = 'https://nearhelp.zendesk.com/hc/';
@@ -228,7 +228,7 @@ const GlobalAlertNew = ({ globalAlert, actionStatus, clearGlobalAlert, closeIcon
                                                     {!alert.success && (
                                                         <a
                                                             href={(noTranslationFound || msgCode.includes('Sorry an error has occurred'))
-                                                                ? `${zendeskBaseURL}${alert.errorMessage ? `search?query=${encodeURIComponent(alert.errorMessage.substring(0, 500))}` : ''}` 
+                                                                ? `${zendeskBaseURL}${alert.errorMessage ? `search?query=${encodeURIComponent(alert.errorMessage.substring(0, 500))}` : ''}`
                                                                 : `${zendeskBaseURL}search?query=${encodeURIComponent(msgCode.substring(0, 500))}`
                                                             }
                                                             target='_blank'

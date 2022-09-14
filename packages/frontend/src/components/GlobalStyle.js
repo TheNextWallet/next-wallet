@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 import CloseBtn from '../images/close-btn.svg';
+import { COLORS } from '../utils/theme';
 
 export default createGlobalStyle`
   * {
@@ -21,6 +22,7 @@ export default createGlobalStyle`
             padding: 0;
             min-height: 100vh !important;
 
+            background: #111111;
             position: relative;
             color: #72727A;
             font-size: 14px !important;
@@ -63,9 +65,13 @@ export default createGlobalStyle`
         font-family: 'IBM Plex Mono', monospace;
     }
 
+    .text-center {
+        text-align: center;
+    }
+
     h1, .h1 {
         font-weight: 900;
-        color: #24272a;
+        color: ${COLORS.white};
         font-size: calc(22px + (30 - 22) * ((100vw - 300px) / (1600 - 300)));
         word-wrap: break-word;
 
@@ -82,8 +88,8 @@ export default createGlobalStyle`
     h2, .h2 {
         font-size: 24px;
         font-weight: 900;
-        color: #72727A;
-        margin: 0px;
+        color: ${COLORS.lightText};
+        margin: 0;
 
         b {
             color: #3F4045;
@@ -92,14 +98,14 @@ export default createGlobalStyle`
     h3, .h3 {
         font-size: 20px;
         font-weight: 900;
-        color: #272729;
-        margin: 0px;
+        color: ${COLORS.lightText};
+        margin: 0;
     }
     h4, .h4 {
         font-size: 16px;
         font-weight: 500;
-        color: #24272a;
-        margin: 0px;
+        color: ${COLORS.lightText}
+        margin: 0;
 
         &.small {
             color: #72727A;
@@ -112,14 +118,14 @@ export default createGlobalStyle`
         font-size: 13px !important;
         font-weight: 500;
         color: #999999 !important;
-        margin: 0px;
+        margin: 0;
     }
 
     h6, .h6 {
         font-size: 12px;
         font-weight: 500;
         color: #999999;
-        margin: 0px;
+        margin: 0;
     }
 
     .font-small {
@@ -181,7 +187,7 @@ export default createGlobalStyle`
         font-size: 16px;
         width: 100%;
         height: 48px;
-        border: 2px solid #FAFAFA;
+        border: 2px solid ${COLORS.darkGray};
         padding: 0 0 0 15px;
         color: #24272A;
         font-weight: normal;
@@ -190,16 +196,15 @@ export default createGlobalStyle`
         outline: none;
         appearance: none;
         border-radius: 8px;
-        background-color: #FAFAFA;
+        background-color: ${COLORS.darkGray};
 
         ::placeholder {
-            color: #A2A2A8;
+            color: ${COLORS.lightText};
         }
 
         :focus {
-            border-color: #0072ce;
-            background-color: #fff;
-            box-shadow: 0 0 0 2pt #C8E3FC;
+            border-color: ${COLORS.green};
+            color: ${COLORS.lightText};
         }
 
         &.stake-amount-input,
@@ -224,15 +229,15 @@ export default createGlobalStyle`
             border: 2px solid #ff585d;
 
             &:focus {
-                box-shadow: 0px 0px 0px 2pt #FFBDBE;
+                box-shadow: 0 0 0 2pt ${COLORS.red};
             }
         }
 
         &.success {
-            border: 2px solid #00C08B;
+            border: 2px solid ${COLORS.green};
 
             &:focus {
-                box-shadow: 0px 0px 0px 2pt #c2f6ff;
+                box-shadow: 0 0 0 2pt ${COLORS.darkGray};
             }
         }
 
@@ -302,21 +307,12 @@ export default createGlobalStyle`
         border: 2px solid #ff585d;
     }
 
-    .problem > .input > input:focus,
-    .problem > input:focus {
-        box-shadow: 0px 0px 0px 2pt #FFBDBE;
-    }
 
     .success > .input > input,
     .success > .input > input:focus,
     .success > input {
         border: 2px solid #00C08B;
-        background-color: white;
-    }
-
-    .success > .input > input:focus,
-    .success > input:focus {
-        box-shadow: 0px 0px 0px 2pt #c5ffef;
+        color: ${COLORS.green};
     }
 
     b {
@@ -399,7 +395,7 @@ export default createGlobalStyle`
     .box {
         border: 2px solid #e6e6e6;
         border-radius: 8px;
-        margin-bottom: 0px;
+        margin-bottom: 0;
         position: relative;
         min-height: 100px;
         position: relative;
@@ -433,7 +429,7 @@ export default createGlobalStyle`
 
     .copy-image {
         width: 18px !important;
-        margin: 0px 10px 0 0px !important;
+        margin: 0 10px 0 0 !important;
         top: -4px !important;
     }
 
@@ -488,7 +484,7 @@ export default createGlobalStyle`
         box-shadow: 1px -1px 0 0 #eee;
     }
     .ui.top.center.popup:before {
-        box-shadow: 1px 1px 0px 0px #eee;
+        box-shadow: 1px 1px 0 0 #eee;
     }
     .ui.bottom.right.popup:before {
         box-shadow: -1px -1px 0 0 #eee;
@@ -498,7 +494,7 @@ export default createGlobalStyle`
         h2, .h2 {
             font-size: 20px;
             font-weight: 900;
-            margin: 0px;
+            margin: 0;
         }
         .box .column {
             padding: 16px 18px !important;
@@ -515,7 +511,7 @@ export default createGlobalStyle`
                     top: 10px !important;
                     right: 10px !important;
                     background: url(${CloseBtn}) center no-repeat;
-                    background-size: 100%;
+                    background-size: 200%;
                     height: 25px;
                     width: 25px;
                     padding: 0;
@@ -618,7 +614,9 @@ export default createGlobalStyle`
 
     .bsw {
         &-l {
-            box-shadow: 0px 45px 56px 0px rgba(0,0,0,0.07), 0px 10.05px 12.51px 0px rgba(0,0,0,0.0417), 0px 2.99px 3.72px 0px rgba(0,0,0,0.0283);
+            box-shadow: 0 45px 56px 0 rgba(0,0,0,0.07),
+              0 10.05px 12.51px 0 rgba(0,0,0,0.0417),
+              0 2.99px 3.72px 0 rgba(0,0,0,0.0283);
         }
     }
 

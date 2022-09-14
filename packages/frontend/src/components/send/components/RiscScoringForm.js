@@ -37,20 +37,20 @@ const RSConsent = styled.div`
     padding: 20px;
 
     & label {
-      user-select: none;
-      display: flex;
-      gap: 0 12px;
-      
-      & input {
-        width: inherit;
-        height: inherit;
-        border: none;
-        appearance: auto;
-        position: inherit;
-        margin: 0;
-        background: none;
-        box-shadow: none;
-      }
+        user-select: none;
+        display: flex;
+        gap: 0 12px;
+
+        & input {
+            width: inherit;
+            height: inherit;
+            border: none;
+            appearance: auto;
+            position: inherit;
+            margin: 0;
+            background: none;
+            box-shadow: none;
+        }
     }
 `;
 

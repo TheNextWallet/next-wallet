@@ -1,27 +1,43 @@
 import styled from 'styled-components';
 
+import { COLORS } from '../../../../utils/theme';
+
 const Breakdown = styled.div`
-    background-color: #FAFAFA;
+    background-color: ${COLORS.darkGray};
+    color: ${COLORS.beige};
     border-radius: 8px;
 
     > div {
-        :first-of-type {
-            color: #272729;
+        color: ${COLORS.beige};
+        .amount {
+            color: ${COLORS.green};
+        }
+
+        .currency {
+            color: ${COLORS.beige};
         }
     }
 
     .breakdown {
-        background-color: #F0F0F1;
+        background-color: ${COLORS.darkGray};
 
         > div {
             > div {
-                border-bottom: 1px solid #E5E5E6;
+                border-bottom: 1px solid;
 
                 :last-of-type {
                     border-bottom: 0;
                 }
             }
         }
+    }
+
+    .amount {
+        color: ${COLORS.green};
+    }
+
+    &.transaction-details-breakdown {
+        color: ${COLORS.green};
     }
 `;
 
