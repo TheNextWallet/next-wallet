@@ -4,6 +4,7 @@ import { Textfit } from 'react-textfit';
 import styled from 'styled-components';
 
 import classNames from '../../../../utils/classNames';
+import { COLORS } from '../../../../utils/theme';
 import FormButton from '../../../common/FormButton';
 import Information from '../entry_types/Information';
 import RawTokenAmount from '../RawTokenAmount';
@@ -11,9 +12,14 @@ import TransactionDetails from '../TransactionDetails';
 
 const StyledContainer = styled.div`
     .information {
-        background-color: #FAFAFA;
+        background-color: ${COLORS.darkGray};
+        color: ${COLORS.lightText};
         border-radius: 8px;
         margin-bottom: 5px;
+
+        > div { 
+            color: ${COLORS.lightText}
+        }
     }
 
     &:not(.sending-token) {
@@ -37,6 +43,7 @@ const StyledContainer = styled.div`
             white-space: normal;
             word-break: break-all;
             line-height: normal;
+            color: ${COLORS.beige};
         }
     }
 `;
@@ -59,9 +66,9 @@ const Review = ({
 }) => {
 
     return (
-        <StyledContainer className={classNames(['buttons-bottom', {'sending-token' : sendingToken === true}])}>
+        <StyledContainer className={classNames(['buttons-bottom', { 'sending-token': sendingToken === true }])}>
             <div className='header'>
-                <Translate id='sendV2.review.title'/>
+                <Translate id='sendV2.review.title' />
             </div>
             <div className='token-amount clickable' onClick={() => sendingToken !== true && onClickAmount()}>
                 <Textfit mode='single' max={38}>
@@ -74,10 +81,12 @@ const Review = ({
                 </Textfit>
             </div>
             <Information
+                id='information-from'
                 translateIdTitle={prefixTXEntryTitleId('from')}
                 informationValue={senderId}
             />
             <Information
+                id='information-to'
                 translateIdTitle={prefixTXEntryTitleId('to')}
                 informationValue={receiverId}
                 onClick={() => sendingToken !== true && onClickReceiver()}
@@ -95,8 +104,9 @@ const Review = ({
                     disabled={sendingToken === true}
                     sending={sendingToken === true}
                     data-test-id="sendMoneyPageConfirmButton"
+                    color='light-green'
                 >
-                    <Translate id={`button.${sendingToken === 'failed' ? 'retry' : 'confirmAndSend'}`}/>
+                    <Translate id={`button.${sendingToken === 'failed' ? 'retry' : 'confirmAndSend'}`} />
                 </FormButton>
                 <FormButton
                     disabled={sendingToken === true}
@@ -104,7 +114,7 @@ const Review = ({
                     className='link'
                     color='gray'
                 >
-                    <Translate id='button.cancel'/>
+                    <Translate id='button.cancel' />
                 </FormButton>
             </div>
         </StyledContainer>

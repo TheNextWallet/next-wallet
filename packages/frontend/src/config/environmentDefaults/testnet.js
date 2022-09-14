@@ -48,6 +48,7 @@ export default {
     SHOW_PRERELEASE_WARNING: false,
     SMS_BLACKLIST: ['CN', 'VN', 'TH'],
     STAKING_GAS_BASE: '25000000000000', // 25 Tgas
+    VOUTING_GAS_BASE: '15000000000000', // 25 Tgas
     WHITELISTED_CONTRACTS: ['meta.pool.testnet'],
     NEAR_TOKEN_ID: 'wrap.testnet',
     FARMING_CLAIM_GAS: parseNearAmount('0.00000000015'),

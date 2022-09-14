@@ -76,6 +76,12 @@ const Style = styled.div`
 
         background: #232323;
         border-radius: 30px;
+
+        .h2 {
+            .title {
+                color: ${COLORS.beige};
+            }
+        }
     }
 
     &.mobile-action-sheet {

@@ -3,6 +3,7 @@ import React from 'react';
 import { Translate } from 'react-localize-redux';
 import styled from 'styled-components';
 
+import { COLORS } from '../../../utils/theme';
 import Balance from '../../common/balance/Balance';
 import Tooltip from '../../common/Tooltip';
 
@@ -17,42 +18,44 @@ const StyledContainer = styled.div`
         .near-amount {
             font-size: 31px;
             font-weight: 600;
-            color: #272729;
+            color: ${COLORS.beige};
         }
         .fiat-amount {
-            color: #72727A;
+            color: ${COLORS.lightText};
             font-size: 16px;
         }
     }
 
     > .account {
+        background-color: ${COLORS.darkGray};
+        border-radius: 8px;
         width: 100%;
-        border-top: 1px solid #F0F0F1;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 20px;
-        color: #72727A;
+        color: ${COLORS.lightText};
 
         .right {
             text-align: right;
             margin-left: 20px;
             
             .account-id {
-                color: #272729;
+                color: ${COLORS.beige};
                 font-weight: 600;
                 word-break: break-all;
             }
 
             .balance {
-                color: #A2A2A8;
+                color: #;
                 margin-top: 5px;
             }
         }
 
         &.from {
+            margin-bottom: 10px;
             .near-amount {
-                color: #72727A;
+                color: ${COLORS.lightText} !i;
             }
 
             &.no-border {
@@ -66,7 +69,7 @@ const StyledContainer = styled.div`
                 align-items: center;
             }
             .near-amount {
-                color: #3F4045;
+                color: ${COLORS.lightText};
             }
             .fiat-amount {
                 color: #A2A2A8;

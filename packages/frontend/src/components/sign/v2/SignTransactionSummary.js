@@ -3,6 +3,7 @@ import React from 'react';
 import { Translate } from 'react-localize-redux';
 import styled from 'styled-components';
 
+import { COLORS } from '../../../utils/theme';
 import AlertBanner from '../../common/AlertBanner';
 import FormButton from '../../common/FormButton';
 import FormButtonGroup from '../../common/FormButtonGroup';
@@ -13,7 +14,7 @@ import SignTransaction from './SignTransaction';
 const StyledContainer = styled(Container)`
     &&& {
         h3 {
-            color: #272729;
+            color: ${COLORS.beige};
             text-align: center;
         }
     
@@ -59,7 +60,7 @@ export default ({
 }) => {
     const insufficientBalance = availableBalance && transferAmount && new BN(availableBalance).lt(new BN(transferAmount));
     return (
-        <StyledContainer className='small-centered border'>
+        <StyledContainer className='small-centered'>
             <h3><Translate id='sign.approveTransaction' /></h3>
             <ConnectWithApplication appReferrer={accountUrlReferrer} />
             {insufficientBalance && (
@@ -75,6 +76,7 @@ export default ({
                 availableBalance={availableBalance}
             />
             <FormButton
+                color='light-green'
                 className='link'
                 onClick={onClickMoreInformation}
             >
@@ -82,7 +84,7 @@ export default ({
             </FormButton>
             <FormButtonGroup>
                 <FormButton
-                    color='gray-blue'
+                    color='dark-green'
                     onClick={onClickCancel}
                     disabled={submittingTransaction || !isValidCallbackUrl}
                 >
@@ -92,6 +94,7 @@ export default ({
                     onClick={onClickApprove}
                     disabled={submittingTransaction || insufficientBalance || !isValidCallbackUrl || !isSignerValid}
                     sending={submittingTransaction}
+                    color='light-green'
                 >
                     <Translate id='button.approve' />
                 </FormButton>

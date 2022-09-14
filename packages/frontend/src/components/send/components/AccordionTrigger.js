@@ -3,13 +3,15 @@ import { Translate } from 'react-localize-redux';
 import styled from 'styled-components';
 
 import classNames from '../../../utils/classNames';
+import { COLORS } from '../../../utils/theme';
 import ChevronIcon from '../../svg/ChevronIcon';
 
 const StyledContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #F0F0F1;
+    background-color: ${COLORS.darkGreen};
+    color: ${COLORS.beige};
     padding: 10px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -24,12 +26,11 @@ const StyledContainer = styled.div`
     }
 
     &.open {
-        background-color: #FAFAFA;
-
         > svg {
             transform: rotate(-90deg);
         }
     }
+
 `;
 
 const AccordionTrigger = ({ id, onClick, translateIdTitle, open }) => {
@@ -40,7 +41,7 @@ const AccordionTrigger = ({ id, onClick, translateIdTitle, open }) => {
             className={classNames(['accordion-trigger' , open ? 'open' : ''])}
         >
             <Translate id={translateIdTitle} />
-            <ChevronIcon color='#0072ce'/>
+            <ChevronIcon color={COLORS.green}/>
         </StyledContainer>
     );
 };
